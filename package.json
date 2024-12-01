@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.1",
+    "mongodb": "^6.11.0",
+    "uuid": "^11.0.3"
+  },
+  "name": "mybookings_api",
+  "type": "module",
+  "main": "server.js"
+}
