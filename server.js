@@ -1,10 +1,14 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import bcrypt from "bcrypt";
 import { mongo_conn, close_connection } from "./mongodb.js";
 
-const APP = express();
-const PORT = 3000;
+const HOST = process.env.HOST;
+const PORT = process.env.PORT;
 
+const APP = express();
 APP.use(express.json());
 
 // need to move these routes to their own files so the logic isnt all in this file
@@ -35,12 +39,9 @@ APP.post("/api/signup", async(req, res) => {
     }
 
     try {
-        const salt = await bcrypt.genSalt();
-        const hashed = await bcrypt.hash(pass, salt);
-    
         const conn = await mongo_conn();
         const collection = conn.collection("users");
-        
+
         // user already exists bad
         let found_user = await collection.findOne({user: user});
         if (found_user) {
@@ -48,10 +49,11 @@ APP.post("/api/signup", async(req, res) => {
             return;
         }
 
+        const hashed = await bcrypt.hash(pass, 10);
+
         const new_user = {
             user: user,
-            pass: hashed,
-            salt: salt
+            pass: hashed
         }
     
         await collection.insertOne(new_user);
@@ -76,11 +78,10 @@ APP.post("/api/login", async (req, res) => {
             res.status(400).send("user does not exist");
             return;
         }
-        const salt = found_user.salt;
-        const stored_hash = found_user.pass;
-        const hashed = await bcrypt.hash(pass, salt);
+        const stored_pass = found_user.pass;
+        const same = await bcrypt.compare(pass, stored_pass);
 
-        if (hashed != stored_hash) {
+        if (!same) {
             res.status(400).send("incorrect password try again");
             return;
         }
@@ -94,11 +95,11 @@ APP.post("/api/login", async (req, res) => {
 });
 
 APP.listen(PORT, () => {
-    console.log(`api running at http://localhost:${PORT}`)
-})
+    console.log(`api running at http://${HOST}:${PORT}`)
+});
 
 // shutdown mongodb on ctrlc
 process.on("SIGINT", async () => {
     await close_connection();
     process.exit(0);
-})
+});

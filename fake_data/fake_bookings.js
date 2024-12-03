@@ -1,4 +1,4 @@
-import { mongo_conn, close_connection } from "./mongodb.js";
+import { mongo_conn, close_connection } from "../mongodb.js";
 
 let data = {
     bookings: [
@@ -37,9 +37,9 @@ let data = {
                 "https://minerva.ca"
             ]
         },
-
     ]
 }
+
 let create_fake_bookings = async (data) => {
     let conn = await mongo_conn();
 
