@@ -34,7 +34,15 @@ keep everything in json responses and requests unless we must use something else
 
 #### api keys  
 api keys and other important backend config stuff is loaded from /.env    
-keep all sensitive keys in here since we are uploading to github and stuff so dont want to leak anything  
+keep all sensitive keys in here since we are uploading to github and stuff so dont want to leak anything.
+you need to make a .env file which look something like this 
+```
+HOST=127.0.0.1
+PORT=5000
+MONGO_HOST=127.0.0.1
+MONGO_PORT=27017
+MONGO_DB=mybookings
+```
 
 #### mongodb connection  
 to get a conn handle from mongodb use the following snippet **needs to be async btw**    
