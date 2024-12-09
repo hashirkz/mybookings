@@ -16,11 +16,15 @@ ROUTER.get("/:booking_id", async (req, res) => {
             booking_id: booking_id,
         });
 
-        res.json(data);
+        res.status(200).json({
+            status: "success",
+            msg: "found booking",
+            data: data,
+        });
     } catch (err) {
-        res.status(500).send({
-            error: "resource does not exist",
-            msg: "unable to fetch booking",
+        res.status(500).json({
+            status: "error",
+            msg: "server error unable to find booking",
         });
     }
 });
@@ -36,13 +40,14 @@ ROUTER.post("/", async (req, res) => {
         let conn = await mongo_conn();
         const collection = conn.collection("bookings");
         await collection.insertOne(data);
-        res.status(201).send({
+        res.status(201).json({
+            status: "success",
             msg: "booking created successfully",
         });
     } catch (err) {
-        res.status(500).send({
-            error: "unable to create resource",
-            msg: "unable to create new booking",
+        res.status(500).json({
+            status: "error",
+            msg: "server error unable to create new booking",
         });
     }
 });

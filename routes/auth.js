@@ -10,7 +10,10 @@ ROUTER.post("/signup", async (req, res) => {
     const { user, pass } = req.body;
 
     if (!user && !pass) {
-        return res.status(400).send("bad request need a username and password");
+        return res.status(400).json({
+            status: "error",
+            msg: "need username and password",
+        });
     }
 
     try {
@@ -20,7 +23,10 @@ ROUTER.post("/signup", async (req, res) => {
         // user already exists bad
         let found_user = await collection.findOne({ user: user });
         if (found_user) {
-            res.status(400).send("this user already exists");
+            res.status(400).json({
+                status: "error",
+                msg: "this user already exists",
+            });
             return;
         }
 
@@ -32,9 +38,15 @@ ROUTER.post("/signup", async (req, res) => {
         };
 
         await collection.insertOne(new_user);
-        res.status(201).send("user created successfully");
+        res.status(201).json({
+            status: "success",
+            msg: "user created successfully",
+        });
     } catch (err) {
-        res.status(500).send("unable to create user");
+        res.status(500).json({
+            status: "error",
+            msg: "server error unable to create user",
+        });
         throw err;
     }
 });
@@ -48,20 +60,32 @@ ROUTER.post("/login", async (req, res) => {
         // fetching the salt and checking if user exists
         let found_user = await collection.findOne({ user: user });
         if (!found_user) {
-            res.status(400).send("user does not exist");
+            res.status(400).json({
+                status: "error",
+                msg: "user does not exist",
+            });
             return;
         }
         const stored_pass = found_user.pass;
         const same = await bcrypt.compare(pass, stored_pass);
 
         if (!same) {
-            res.status(400).send("incorrect password try again");
+            res.status(400).json({
+                status: "error",
+                msg: "incorrect password",
+            });
             return;
         }
 
-        res.status(200).send("success logged in");
+        res.status(200).json({
+            status: "success",
+            msg: "user logged in successfully",
+        });
     } catch (err) {
-        res.status(500).send("server error unable to login");
+        res.status(500).json({
+            status: "error",
+            msg: "server error unable to login",
+        });
         throw err;
     }
 });

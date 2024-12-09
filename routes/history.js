@@ -16,9 +16,16 @@ ROUTER.get("/:user_id", async (req, res) => {
             })
             .toArray();
 
-        res.json(data);
+        res.status(200).json({
+            status: "success",
+            msg: "users booking history found successfully",
+            data: data,
+        });
     } catch (err) {
-        res.status(500).send("unable to fetch data");
+        res.status(500).json({
+            status: "error",
+            msg: "unable to fetch data",
+        });
     }
 });
 
