@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
+import cors from "cors";
 import { close_connection } from "./mongodb.js";
 import { localhost } from "./utils.js";
 
@@ -13,6 +14,7 @@ const PORT = process.env.PORT;
 
 const APP = express();
 APP.use(express.json());
+APP.use(cors());
 
 // ROUTES
 APP.use("/api/history", history_router);
