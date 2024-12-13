@@ -3,7 +3,6 @@ dotenv.config({ path: "../.env" });
 
 const HOST = process.env.HOST;
 const PORT = process.env.PORT;
-console.log(HOST);
 const fmt_url = ({ host = HOST, port = PORT, endpoint = "/api/booking" }) => {
     return `http://${host}:${port}${endpoint}`;
 };
@@ -57,6 +56,17 @@ let bookings = [
     },
 ];
 
-bookings.forEach((new_booking) => {
-    test_create_booking(new_booking).then((resp) => console.log(resp));
-});
+// bookings.forEach((new_booking) => {
+//     test_create_booking(new_booking).then((resp) => console.log(resp));
+// });
+
+const new_booking = {
+    user_id: 444,
+    name: "bingus meeting",
+    start: "2024-12-12 11:00",
+    end: "2024-12-12 12:00",
+    invited: [3102, 400],
+    attachments: [],
+};
+
+test_create_booking(new_booking).then((resp) => console.log(resp));
