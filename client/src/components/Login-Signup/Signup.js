@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { format_url } from "../../conf.js";
-import css from "./Login.module.css";
+import "./Login.css";
 
 function Signup() {
   const [user, setUser] = useState({ user: "", pass: "" });
@@ -24,23 +24,21 @@ function Signup() {
 
     if (resp.ok) {
       const data = await resp.json();
-      console.log("Registration successful:", data);
-      alert("Registration successful! Please log in.");
+      alert(`${data.status}: ${data.msg}`);
     } else {
-      const errorData = await resp.json();
-      console.error("Registration error:", errorData);
-      alert(`Error: ${errorData.error || "Something went wrong"}`);
+      const data = await resp.json();
+      alert(`${data.status}: ${data.msg}`);
     }
   };
 
   return (
-    <div className={css.loginContainer}>
-      <form className={css.loginForm} onSubmit={handleSignup}>
+    <div className="login-container">
+      <form className="login-form" onSubmit={handleSignup}>
         <input
           name="user"
           type="text"
           placeholder="Email"
-          className={css.inputText}
+          className="input-text"
           onChange={handleChange}
           required
         />
@@ -48,11 +46,11 @@ function Signup() {
           name="pass"
           type="password"
           placeholder="Password"
-          className={css.inputText}
+          className="input-text"
           onChange={handleChange}
           required
         />
-        <button type="submit" className={css.inputText}>
+        <button type="submit" className="input-text">
           Sign Up
         </button>
       </form>

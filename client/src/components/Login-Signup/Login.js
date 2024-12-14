@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { format_url } from "../../conf.js";
-import css from "./Login.module.css";
+import "./Login.css";
 
 function Login() {
   const [user, setUser] = useState({ user: "", pass: "" });
@@ -25,26 +25,29 @@ function Login() {
 
     if (resp.ok) {
       const data = await resp.json();
-      console.log(data);
+      alert(`${data.status}: ${data.msg}`);
+    } else {
+      const data = await resp.json();
+      alert(`${data.status}: ${data.msg}`);
     }
   };
 
   return (
     <>
-      <div className={css.loginContainer}>
-        <form className={css.loginForm} onSubmit={handleLogin}>
+      <div className="login-container">
+        <form className="login-form" onSubmit={handleLogin}>
           <input
             name="user"
             type="text"
             placeholder="username"
-            className={css.inputText}
+            className="input-text"
             onChange={handleChange}
           />
           <input
             name="pass"
             type="password"
             placeholder="password"
-            className={css.inputText}
+            className="input-text"
             onChange={handleChange}
           />
           <button type="submit"></button>
