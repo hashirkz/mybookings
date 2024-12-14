@@ -22,7 +22,7 @@ response format:
 */
 ROUTER.get("/:user_id", async (req, res) => {
     try {
-        let user_id = parseInt(req.params.user_id, 10);
+        let user_id = req.params.user_id;
         const conn = await mongo_conn();
         const collection = conn.collection("bookings");
         let data = await collection

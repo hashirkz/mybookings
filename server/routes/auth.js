@@ -1,8 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
-import { mongo_conn } from "../mongodb.js";
 import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
+import { mongo_conn } from "../mongodb.js";
 
 const ROUTER = express.Router();
 
@@ -52,6 +53,7 @@ ROUTER.post("/signup", async (req, res) => {
         const new_user = {
             user: user,
             pass: hashed,
+            user_id: uuidv4(),
         };
 
         await collection.insertOne(new_user);

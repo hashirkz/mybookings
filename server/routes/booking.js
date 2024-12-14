@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
+import { v4 as uuidv4 } from "uuid";
 import { mongo_conn } from "../mongodb.js";
-import { gen_uuid } from "../utils.js";
 
 const ROUTER = express.Router();
 
@@ -69,7 +69,7 @@ response format:
 */
 ROUTER.post("/", async (req, res) => {
     try {
-        const uuid = gen_uuid();
+        const uuid = uuidv4();
         const data = {
             ...req.body,
             booking_id: uuid,

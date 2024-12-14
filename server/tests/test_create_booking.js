@@ -20,7 +20,7 @@ const test_create_booking = async (data) => {
 
 let bookings = [
     {
-        user_id: 400,
+        user_id: "400",
         name: "some meeting",
         start: "2024-12-22 12:20",
         end: "2024-12-22 13:20",
@@ -28,7 +28,7 @@ let bookings = [
         attachments: ["https://fakes3link"],
     },
     {
-        user_id: 3102,
+        user_id: "3102",
         name: "comp307 final project meeting",
         start: "2024-12-01 18:30",
         end: "2024-12-01 20:00",
@@ -36,7 +36,7 @@ let bookings = [
         attachments: ["https://ahmedtahir", "https://fakelink"],
     },
     {
-        user_id: 118,
+        user_id: "118",
         name: "csus party",
         start: "2024-12-01 20:00",
         end: "2024-12-02 1:00",
@@ -47,7 +47,7 @@ let bookings = [
         ],
     },
     {
-        user_id: 118,
+        user_id: "118",
         name: "guidance counselor meeting",
         start: "2023-01-06 18:30",
         end: "2023-01-06 20:00",
@@ -56,17 +56,17 @@ let bookings = [
     },
 ];
 
-// bookings.forEach((new_booking) => {
-//     test_create_booking(new_booking).then((resp) => console.log(resp));
-// });
+bookings.forEach((new_booking) => {
+    test_create_booking(new_booking).then((resp) => console.log(resp));
+});
 
-const new_booking = {
-    user_id: 444,
-    name: "bingus meeting",
-    start: "2024-12-12 11:00",
-    end: "2024-12-12 12:00",
-    invited: [3102, 400],
-    attachments: [],
-};
+// const new_booking = {
+//     user_id: "100",
+//     name: "bingus meeting",
+//     start: "2024-12-12 11:00",
+//     end: "2024-12-12 12:00",
+//     invited: [3102, 400],
+//     attachments: [],
+// };
 
-test_create_booking(new_booking).then((resp) => console.log(resp));
+// test_create_booking(new_booking).then((resp) => console.log(resp));
