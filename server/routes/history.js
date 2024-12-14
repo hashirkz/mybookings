@@ -7,7 +7,7 @@ const ROUTER = express.Router();
 
 
 /*
-endpoint: /api/booking/<user_id>
+endpoint: /api/booking/:user_id
 method: GET
 purpose: for fetching a users booking history by their user_id
 

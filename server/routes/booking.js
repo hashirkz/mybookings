@@ -7,7 +7,7 @@ import { gen_uuid } from "../utils.js";
 const ROUTER = express.Router();
 
 /*
-endpoint: /api/booking/<booking_id>
+endpoint: /api/booking/:booking_id
 method: GET
 purpose: for fetching a booking from its booking_id
 
