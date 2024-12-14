@@ -3,7 +3,7 @@ import { format_url } from "../conf.js";
 import css from "./Login.module.css";
 
 function Signup() {
-  const [user, setUser] = useState({ user: "", pass: "", email: "" });
+  const [user, setUser] = useState({ user: "", pass: "" });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,7 +16,7 @@ function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    const resp = await fetch(format_url({ endpoint: "/api/auth/register" }), {
+    const resp = await fetch(format_url({ endpoint: "/api/auth/signup" }), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
@@ -39,14 +39,6 @@ function Signup() {
         <input
           name="user"
           type="text"
-          placeholder="Username"
-          className={css.inputText}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="email"
-          type="email"
           placeholder="Email"
           className={css.inputText}
           onChange={handleChange}
