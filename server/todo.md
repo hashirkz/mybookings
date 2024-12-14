@@ -1,16 +1,16 @@
 # unfinished routes      
 
-## send_booking    
+## send_booking
 endpoint: /api/send_booking    
 method: POST    
 purpose: send a booking request to a member    
 
-## booking    (done ig)
+## booking (done)
 endpoint: /api/booking/:booking_id    
 methods: [PUT, DELETE]    
 purpose: to update or delete a booking by the booking_id    
 
-## users (done ig)    
+## users (done)    
 endpoint: /api/users/:user_id    
 methods: [PUT, DELETE]    
 purpose: to delete a user account by the user_id    

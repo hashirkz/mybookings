@@ -1,4 +1,4 @@
-curl -X PUT "http://10.140.17.110:5000/api/booking/f1d66270-767b-4b6c-8455-a1d4c881ef7f" \
+curl -X PUT "http://localhost:5000/api/booking/f1d66270-767b-4b6c-8455-a1d4c881ef7f" \
 -H "Content-Type: application/json" \
 -d '{
     "name": "new name",

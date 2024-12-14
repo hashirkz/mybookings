@@ -1,1 +1,1 @@
-curl -X DELETE http://10.140.17.110:5000/api/booking/9c42dd7e-e760-4f10-a380-1dd2fe169fc8
+curl -X DELETE http://localhost:5000/api/booking/394e715d-35c8-4405-ab95-c72570b08311

@@ -1,7 +1,7 @@
 # unfinished components  
 
-## Signup.js 
-will be very similar to Login.js  
+## Signup.js (done)
+will be very similar to Login.js
 
 ##  Nav.js 
 main navbar header for all the signed in pages  
@@ -29,5 +29,5 @@ unsure about this page honestly the description on the pdf is awful and unclear.
 - App.css  
 
 # routing  
-need to add routing for login/signup to separate it from   
-signed in pages  
+- need to add routing for login/signup to separate it from signed in pages  
+- jwt for protected endpoints *need to implement jwt auth stuff for backend first before*

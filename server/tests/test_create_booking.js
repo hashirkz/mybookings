@@ -24,7 +24,7 @@ let bookings = [
         name: "some meeting",
         start: "2024-12-22 12:20",
         end: "2024-12-22 13:20",
-        invited: [119, 118],
+        invited: ["119", "118"],
         attachments: ["https://fakes3link"],
     },
     {
@@ -32,7 +32,7 @@ let bookings = [
         name: "comp307 final project meeting",
         start: "2024-12-01 18:30",
         end: "2024-12-01 20:00",
-        invited: [118, 119, 292, 112],
+        invited: ["118", "119", "292", "112"],
         attachments: ["https://ahmedtahir", "https://fakelink"],
     },
     {
@@ -40,7 +40,7 @@ let bookings = [
         name: "csus party",
         start: "2024-12-01 20:00",
         end: "2024-12-02 1:00",
-        invited: [119, 222],
+        invited: ["119", "222"],
         attachments: [
             "https://cs.mcgill.ca/newsletter",
             "https://anotherfakelinkidk",
@@ -51,7 +51,7 @@ let bookings = [
         name: "guidance counselor meeting",
         start: "2023-01-06 18:30",
         end: "2023-01-06 20:00",
-        invited: [118],
+        invited: ["118"],
         attachments: ["https://minerva.ca"],
     },
 ];
@@ -60,13 +60,13 @@ bookings.forEach((new_booking) => {
     test_create_booking(new_booking).then((resp) => console.log(resp));
 });
 
-// const new_booking = {
-//     user_id: "100",
-//     name: "bingus meeting",
-//     start: "2024-12-12 11:00",
-//     end: "2024-12-12 12:00",
-//     invited: [3102, 400],
-//     attachments: [],
-// };
+const new_booking = {
+     user_id: "100",
+     name: "bingus meeting",
+     start: "2024-12-12 11:00",
+     end: "2024-12-12 12:00",
+     invited: ["3102", "400"],
+     attachments: [],
+};
 
-// test_create_booking(new_booking).then((resp) => console.log(resp));
+test_create_booking(new_booking).then((resp) => console.log(resp));
