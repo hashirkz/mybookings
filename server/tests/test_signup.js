@@ -25,9 +25,10 @@ let test_post_signup_login = async (user, endpoint) => {
 };
 
 let user = {
-    user: "iron",
-    pass: "iamiron",
+    user: "fatin",
+    pass: "fatin123",
 };
+
 
 test_post_signup_login(user, "/api/auth/signup").then((resp) =>
     console.log(resp)

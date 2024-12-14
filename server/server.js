@@ -8,6 +8,7 @@ import { localhost } from "./utils.js";
 import history_router from "./routes/history.js";
 import booking_router from "./routes/booking.js";
 import auth_router from "./routes/auth.js";
+import user_router from "./routes/users.js";
 
 const HOST = process.env.HOST;
 const PORT = process.env.PORT;
@@ -20,6 +21,7 @@ APP.use(cors());
 APP.use("/api/history", history_router);
 APP.use("/api/booking", booking_router);
 APP.use("/api/auth", auth_router);
+APP.use("/api/users", user_router);
 
 APP.listen(PORT, () => {
     console.log(

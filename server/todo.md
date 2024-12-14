@@ -10,10 +10,11 @@ endpoint: /api/booking/:booking_id
 methods: [PUT, DELETE]    
 purpose: to update or delete a booking by the booking_id    
 
-## users    
+## users (kinda done lol)    
 endpoint: /api/users/:user_id    
 methods: [PUT, DELETE]    
-purpose: to update / delete a user account by the user_id    
+purpose: to delete a user account by the user_id    
+
 
 # other    
 - jwt / session storing needs to be done    
