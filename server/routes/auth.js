@@ -6,6 +6,23 @@ import bcrypt from "bcrypt";
 
 const ROUTER = express.Router();
 
+/*
+endpoint: /api/auth/signup
+method: POST
+purpose: for signing up new users
+
+request format:
+    {
+        user: "username",
+        pass: "password"
+    }
+
+response format:
+    { 
+        status: "", 
+        msg: "" 
+    }
+*/
 ROUTER.post("/signup", async (req, res) => {
     const { user, pass } = req.body;
 
@@ -51,6 +68,23 @@ ROUTER.post("/signup", async (req, res) => {
     }
 });
 
+/*
+endpoint: /api/auth/login
+method: POST
+purpose: for logging in an existing user
+
+request format:
+    {
+        user: "username",
+        pass: "password"
+    }
+
+response format:
+    { 
+        status: "", 
+        msg: "" 
+    }
+*/
 ROUTER.post("/login", async (req, res) => {
     const { user, pass } = req.body;
     try {

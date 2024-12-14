@@ -5,6 +5,21 @@ import { mongo_conn } from "../mongodb.js";
 
 const ROUTER = express.Router();
 
+
+/*
+endpoint: /api/booking/<user_id>
+method: GET
+purpose: for fetching a users booking history by their user_id
+
+response format:
+    { 
+        status: "", 
+        msg: "",
+        data: [
+            ... empty or an array of found bookings ...
+        ] 
+    }
+*/
 ROUTER.get("/:user_id", async (req, res) => {
     try {
         let user_id = parseInt(req.params.user_id, 10);

@@ -6,6 +6,20 @@ import { gen_uuid } from "../utils.js";
 
 const ROUTER = express.Router();
 
+/*
+endpoint: /api/booking/<booking_id>
+method: GET
+purpose: for fetching a booking from its booking_id
+
+response format:
+    { 
+        status: "", 
+        msg: "",
+        data: {
+            ... empty or the found booking ...
+        }
+    }
+*/
 ROUTER.get("/:booking_id", async (req, res) => {
     try {
         const booking_id = req.params.booking_id;
@@ -29,6 +43,30 @@ ROUTER.get("/:booking_id", async (req, res) => {
     }
 });
 
+/*
+endpoint: /api/booking
+method: POST
+purpose: for creating a new booking
+
+request_format: 
+    {
+        user_id: 118,
+        name: "csus party",
+        start: "2024-12-01 20:00",
+        end: "2024-12-02 1:00",
+        invited: [119, 222],
+        attachments: [
+            "https://cs.mcgill.ca/newsletter",
+            "https://anotherfakelinkidk",
+        ]
+    }
+
+response format:
+    {
+        status: "",
+        msg: ""
+    }
+*/
 ROUTER.post("/", async (req, res) => {
     try {
         const uuid = gen_uuid();
