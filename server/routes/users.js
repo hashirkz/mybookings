@@ -5,10 +5,17 @@ import { mongo_conn } from "../mongodb.js";
 
 const ROUTER = express.Router();
 
-// ## users    
-// endpoint: /api/users/:user_id    
-// methods: [PUT, DELETE]    
-// purpose: to update / delete a user account by the user_id  
+/*
+endpoint: /api/users/:user_id
+method: DELETE
+purpose: for deleting an existing user
+
+response format:
+    {
+        status: "",
+        msg: ""
+    }
+*/
 ROUTER.delete("/:user_id", async (req, res) => {
     try {
         let user_id = req.params.user_id;
@@ -32,7 +39,7 @@ ROUTER.delete("/:user_id", async (req, res) => {
     } catch (err) {
         res.status(500).json({
             status: "error",
-            msg: "unable to delete user",
+            msg: "server error unable to delete user",
         });
     }
 });

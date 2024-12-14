@@ -3,7 +3,7 @@
 ## Signup.js 
 will be very similar to Login.js  
 
-## Nav.js  
+##  Nav.js 
 main navbar header for all the signed in pages  
 
 ## History.js  
