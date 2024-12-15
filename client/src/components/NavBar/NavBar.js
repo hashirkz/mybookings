@@ -1,7 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./NavBar.css";
 
 function NavBar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+
+    navigate("/login");
+  }
   return (
     <div className="navbar">
       <div className="navbar-left">
@@ -14,7 +22,7 @@ function NavBar() {
         <a href="/request" className="navbar-link">Send a Request</a>
         <a href="/booking" className="navbar-link">Booking</a>
         <a href="/history" className="navbar-link">History</a>
-        <a className="logout-button" href="/">Log Out</a>
+        <button className="logout-button" onClick={handleLogout}>Log Out</button>
       </div>
     </div>
   );

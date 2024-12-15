@@ -27,8 +27,17 @@
     caret-color: var(--txt);
     outline: none;
     border: none;
+
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+.input-text:focus {
+    background-color: var(--accent2);
+}
+.input-text[type="submit"]:hover {
+    background-color: var(--accent2);
+    transform: scale(1.2);
+}
 /* overrides the default yellow input boxes */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

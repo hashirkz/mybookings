@@ -1,9 +1,11 @@
 import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { format_url } from "../../conf.js";
 import "./Login.css";
 
 function Login() {
   const [user, setUser] = useState({ user: "", pass: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -25,7 +27,8 @@ function Login() {
 
     if (resp.ok) {
       const data = await resp.json();
-      alert(`${data.status}: ${data.msg}`);
+      localStorage.setItem("token", data.token);
+      navigate("/home");
     } else {
       const data = await resp.json();
       alert(`${data.status}: ${data.msg}`);
@@ -39,18 +42,20 @@ function Login() {
           <input
             name="user"
             type="text"
-            placeholder="username"
+            placeholder="Email"
             className="input-text"
             onChange={handleChange}
           />
           <input
             name="pass"
             type="password"
-            placeholder="password"
+            placeholder="Password"
             className="input-text"
             onChange={handleChange}
           />
-          <button type="submit"></button>
+          <button type="submit" className="input-text">
+            Log In
+          </button>
         </form>
       </div>
     </>
