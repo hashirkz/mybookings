@@ -1,13 +1,15 @@
 import { React, useState, useEffect } from "react";
-import NavBar from "../components/NavBar/NavBar";
+import NavBar from "../components/NavBar/NavBar.js";
+import BookingGallery from "../components/BookingGallery/BookingGallery.js";
 import { format_url } from "../conf.js";
 import "./History.css";
 
 function History() {
-  const [bookings, setBookings] = useState([]);
+  const [createdBookings, setCreatedBookings] = useState([]);
+  const [invitedBookings, setInvitedBookings] = useState([]);
 
-  const fetchBookings = async (token) => {
-    const url = format_url({ endpoint: "/api/history" });
+  const fetchBookings = async (token, type) => {
+    const url = format_url({ endpoint: "/api/history" }) + `?type=${type}`;
     const resp = await fetch(url, {
       method: "GET",
       headers: {
@@ -16,7 +18,9 @@ function History() {
     });
     if (resp.ok) {
       const data = await resp.json();
-      setBookings(data.data);
+      type == "created"
+        ? setCreatedBookings(data.data)
+        : setInvitedBookings(data.data);
     } else {
       alert("unable to fetch bookings");
     }
@@ -25,36 +29,25 @@ function History() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      console.log(token);
-      fetchBookings(token);
+      fetchBookings(token, "created");
+      fetchBookings(token, "invited");
     }
   }, []);
 
   // sorting the bookings
-  const sortedBookings = bookings.sort((booking1, booking2) => {
+  const sortedCreatedBookings = createdBookings.sort((booking1, booking2) => {
+    return new Date(booking2.start) - new Date(booking1.start);
+  });
+
+  const sortedInvitedBookings = invitedBookings.sort((booking1, booking2) => {
     return new Date(booking2.start) - new Date(booking1.start);
   });
   return (
     <>
       <NavBar />
       <div className="history-container">
-        <div className="bookings-container">
-          {sortedBookings.length == 0 ? (
-            <p>no bookings</p>
-          ) : (
-            sortedBookings.map((booking) => {
-              return (
-                <a
-                  className="booking-item"
-                  href={`booking/${booking.booking_id}`}
-                >
-                  <p>{booking.name}</p>
-                  <p>{booking.start}</p>
-                </a>
-              );
-            })
-          )}
-        </div>
+        <BookingGallery bookings={sortedCreatedBookings} name="created" />
+        <BookingGallery bookings={sortedInvitedBookings} name="invited" />
       </div>
     </>
   );
