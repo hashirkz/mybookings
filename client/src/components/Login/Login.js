@@ -16,11 +16,9 @@ function Login() {
     }));
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-    const resp = await fetch(format_url({ endpoint: "/api/auth/login" }), {
-      method: "post",
+  const handleAuth = async (endpoint) => {
+    const resp = await fetch(format_url({ endpoint: endpoint }), {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
     });
@@ -35,24 +33,16 @@ function Login() {
     }
   };
 
-  
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    handleAuth("/api/auth/login");
+  };
+
   const handleSignup = async (e) => {
     e.preventDefault();
-
-    const resp = await fetch(format_url({ endpoint: "/api/auth/signup" }), {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user),
-    });
-
-    if (resp.ok) {
-      const data = await resp.json();
-      alert(`${data.status}: ${data.msg}`);
-    } else {
-      const data = await resp.json();
-      alert(`${data.status}: ${data.msg}`);
-    }
+    handleAuth("/api/auth/signup");
   };
+
   return (
     <>
       <div className="login-container">
@@ -71,11 +61,15 @@ function Login() {
             className="input-text"
             onChange={handleChange}
           />
-          <button type="submit" className="input-button">Log In</button>
+          <button type="submit" className="input-button">
+            Log In
+          </button>
         </form>
         <div className="signup-container">
           <p>dont have an account?</p>
-          <button className="input-button" onClick={handleSignup}>Sign Up</button>
+          <button className="input-button" onClick={handleSignup}>
+            Sign Up
+          </button>
         </div>
       </div>
     </>

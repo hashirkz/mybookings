@@ -12,12 +12,18 @@ const Landing = () => {
         <div className="right-panel">
           <h1>myBookings</h1>
           <p>Book your first meeting now!</p>
-          <a className="start-button" href="/signup">Start Today!</a>
-          <p>Already a member? <a className="login-here" href="/login" >Login Here</a></p>
+          <a className="start-button" href="/login">
+            Start Today!
+          </a>
+          <p>
+            Already a member?{" "}
+            <a className="login-here" href="/login">
+              Login Here
+            </a>
+          </p>
           <p>Have a Booking URL?</p>
         </div>
       </div>
-     
     </div>
   );
 };
