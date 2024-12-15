@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
+import verify_jwt from "../jwt.js";
 import { v4 as uuidv4 } from "uuid";
 import { mongo_conn } from "../mongodb.js";
 
@@ -44,13 +45,17 @@ ROUTER.get("/:booking_id", async (req, res) => {
 });
 
 /*
+PROTECTED
 endpoint: /api/booking
 method: POST
-purpose: for creating a new booking
+purpose: for creating a new booking owned by the logged in user
 
 request_format: 
     {
-        user_id: 118,
+        user: {
+            user_id: "118",
+            user: "admin",
+        },
         name: "csus party",
         start: "2024-12-01 20:00",
         end: "2024-12-02 1:00",
@@ -67,13 +72,15 @@ response format:
         msg: ""
     }
 */
-ROUTER.post("/", async (req, res) => {
+ROUTER.post("/", verify_jwt, async (req, res) => {
     try {
-        const uuid = uuidv4();
+        const booking_id = uuidv4();
         const data = {
             ...req.body,
-            booking_id: uuid,
+            user_id: req.user.user_id,
+            booking_id: booking_id,
         };
+        delete data.user;
 
         let conn = await mongo_conn();
         const collection = conn.collection("bookings");
@@ -91,6 +98,7 @@ ROUTER.post("/", async (req, res) => {
 });
 
 /*
+PROTECTED
 endpoint: /api/booking/:booking_id
 method: DELETE
 purpose: for deleting an existing booking
@@ -101,22 +109,23 @@ response format:
         msg: ""
     }
 */
-ROUTER.delete("/:booking_id", async (req, res) => {
+ROUTER.delete("/:booking_id", verify_jwt, async (req, res) => {
     try {
         const booking_id = req.params.booking_id;
+        const user_id = req.user.user_id;
         let conn = await mongo_conn();
         const collection = conn.collection("bookings");
 
         const status = await collection.deleteOne({
+            user_id: user_id,
             booking_id: booking_id,
         });
-        
-        if (status.deletedCount != 1) {
-            res.status(400).json({
+
+        if (status.deletedCount == 0) {
+            return res.status(404).json({
                 status: "error",
-                msg: "booking does not exist",
+                msg: `unable to find booking ${booking_id}`,
             });
-            return;
         }
 
         res.status(200).json({
@@ -132,12 +141,17 @@ ROUTER.delete("/:booking_id", async (req, res) => {
 });
 
 /*
+PROTECTED
 endpoint: /api/booking/:booking_id
 method: PUT
 purpose: for updating an existing booking
 
 request_format: 
     {
+        user: {
+            user_id: "100",
+            user: "admin",
+        },
         name: "new name",
         start: "2024-12-01 20:00",
         end: "2024-12-02 1:00",
@@ -154,23 +168,26 @@ response format:
         msg: ""
     }
 */
-ROUTER.put("/:booking_id", async (req, res) => {
+ROUTER.put("/:booking_id", verify_jwt, async (req, res) => {
     try {
         const booking_id = req.params.booking_id;
+        const user_id = req.user.user_id;
         let conn = await mongo_conn();
         const collection = conn.collection("bookings");
 
         const status = await collection.updateOne(
-            { booking_id: booking_id },
+            {
+                booking_id: booking_id,
+                user_id: user_id,
+            },
             { $set: req.body }
         );
 
-        if (status.modifiedCount != 1) {
-            res.status(400).json({
+        if (status.modifiedCount == 0) {
+            return res.status(404).json({
                 status: "error",
-                msg: "booking does not exist",
+                msg: `unable to find booking ${booking_id}`,
             });
-            return;
         }
 
         res.status(200).json({

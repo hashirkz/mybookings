@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 import { mongo_conn } from "../mongodb.js";
 
@@ -41,11 +42,10 @@ ROUTER.post("/signup", async (req, res) => {
         // user already exists bad
         let found_user = await collection.findOne({ user: user });
         if (found_user) {
-            res.status(400).json({
+            return res.status(400).json({
                 status: "error",
                 msg: "this user already exists",
             });
-            return;
         }
 
         const hashed = await bcrypt.hash(pass, 10);
@@ -66,7 +66,6 @@ ROUTER.post("/signup", async (req, res) => {
             status: "error",
             msg: "server error unable to create user",
         });
-        throw err;
     }
 });
 
@@ -96,33 +95,41 @@ ROUTER.post("/login", async (req, res) => {
         // fetching the salt and checking if user exists
         let found_user = await collection.findOne({ user: user });
         if (!found_user) {
-            res.status(400).json({
+            return res.status(400).json({
                 status: "error",
                 msg: "user does not exist",
             });
-            return;
         }
         const stored_pass = found_user.pass;
         const same = await bcrypt.compare(pass, stored_pass);
 
         if (!same) {
-            res.status(400).json({
+            return res.status(400).json({
                 status: "error",
                 msg: "incorrect password",
             });
-            return;
         }
+
+        // create bearer jwt cookie
+        const bearer_token = jwt.sign(
+            {
+                user_id: found_user.user_id,
+                user: found_user.user,
+            },
+            process.env.JWT_SECRET_KEY,
+            { expiresIn: "3d" }
+        );
 
         res.status(200).json({
             status: "success",
             msg: "user logged in successfully",
+            token: bearer_token,
         });
     } catch (err) {
         res.status(500).json({
             status: "error",
             msg: "server error unable to login",
         });
-        throw err;
     }
 });
 
