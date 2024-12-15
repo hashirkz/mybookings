@@ -49,17 +49,29 @@ ROUTER.post("/signup", async (req, res) => {
         }
 
         const hashed = await bcrypt.hash(pass, 10);
+        const user_id = uuidv4();
 
         const new_user = {
             user: user,
             pass: hashed,
-            user_id: uuidv4(),
+            user_id: user_id,
         };
+
+        // create bearer jwt cookie
+        const bearer_token = jwt.sign(
+            {
+                user_id: user_id,
+                user: user,
+            },
+            process.env.JWT_SECRET_KEY,
+            { expiresIn: "1d" }
+        );
 
         await collection.insertOne(new_user);
         res.status(201).json({
             status: "success",
             msg: "user created successfully",
+            token: bearer_token,
         });
     } catch (err) {
         res.status(500).json({
@@ -117,7 +129,7 @@ ROUTER.post("/login", async (req, res) => {
                 user: found_user.user,
             },
             process.env.JWT_SECRET_KEY,
-            { expiresIn: "3d" }
+            { expiresIn: "1d" }
         );
 
         res.status(200).json({
