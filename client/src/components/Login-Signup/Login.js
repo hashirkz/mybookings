@@ -35,6 +35,24 @@ function Login() {
     }
   };
 
+  
+  const handleSignup = async (e) => {
+    e.preventDefault();
+
+    const resp = await fetch(format_url({ endpoint: "/api/auth/signup" }), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    });
+
+    if (resp.ok) {
+      const data = await resp.json();
+      alert(`${data.status}: ${data.msg}`);
+    } else {
+      const data = await resp.json();
+      alert(`${data.status}: ${data.msg}`);
+    }
+  };
   return (
     <>
       <div className="login-container">
@@ -53,10 +71,12 @@ function Login() {
             className="input-text"
             onChange={handleChange}
           />
-          <button type="submit" className="input-text">
-            Log In
-          </button>
+          <button type="submit" className="input-button">Log In</button>
         </form>
+        <div className="signup-container">
+          <p>dont have an account?</p>
+          <button className="input-button" onClick={handleSignup}>Sign Up</button>
+        </div>
       </div>
     </>
   );
