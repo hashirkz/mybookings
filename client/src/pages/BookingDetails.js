@@ -11,7 +11,7 @@ function BookingDetails() {
   const { booking_id } = useParams();
 
   const fetchBooking = async (booking_id) => {
-    const url = format_url({ endpoint: "/api/booking" }) + `/${booking_id}`;
+    const url = format_url({ endpoint: `/api/booking/${booking_id}` });
     const resp = await fetch(url, {
       method: "GET",
     });
@@ -24,7 +24,7 @@ function BookingDetails() {
   };
 
   const fetchUser = async (user_id) => {
-    const url = format_url({ endpoint: "/api/users" }) + `/${user_id}`;
+    const url = format_url({ endpoint: `/api/users/${user_id}` });
     const resp = await fetch(url, {
       method: "GET",
     });

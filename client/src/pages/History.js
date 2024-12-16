@@ -11,7 +11,7 @@ function History() {
   const handleDelete = async (booking_id, setBookings) => {
     try {
       const token = localStorage.getItem("token");
-      const url = format_url({ endpoint: "/api/booking" }) + `/${booking_id}`;
+      const url = format_url({ endpoint: `/api/booking/${booking_id}` });
       const resp = await fetch(url, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
@@ -28,7 +28,7 @@ function History() {
   };
 
   const fetchBookings = async (token, type) => {
-    const url = format_url({ endpoint: "/api/history" }) + `?type=${type}`;
+    const url = format_url({ endpoint: "/api/history", q: { type: type } });
     const resp = await fetch(url, {
       method: "GET",
       headers: {

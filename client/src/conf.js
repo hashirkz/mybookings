@@ -3,9 +3,14 @@ const HOST = process.env.REACT_APP_SERVER_HOST;
 const PORT = process.env.REACT_APP_SERVER_PORT;
 
 
-const format_url = ({host=HOST, port=PORT, endpoint}) => {
-    return `http://${host}:${port}${endpoint}`;
-}
+const format_url = ({ host = HOST, port = PORT, endpoint, q = {} }) => {
+  let url = `http://${host}:${port}${endpoint}`;
+
+  Object.entries(q).map(([k, v], i) => {
+    url += i == 0 ? `?${k}=${v}` : `&${k}=${v}`;
+  });
+  return url;
+};
 
 const format_date = ({
   d,
@@ -24,4 +29,9 @@ const format_date = ({
   return formatted;
 };
 
-export { format_url, format_date };
+const valid_mcgill_email = (email) => {
+  const pattern = /[\w.]@(mail.mcgill.ca|mcgill.ca)$/;
+  return pattern.test(email);
+};
+
+export { format_url, format_date, valid_mcgill_email };
