@@ -76,16 +76,21 @@ function BookingDetails() {
           <p>
             {booking.name} with {owner}
           </p>
-          <p>{fmtDate(booking.start)}</p>
-          <p>{fmtDate(booking.end)}</p>
+          <p>
+            {fmtDate(booking.start)} to {fmtDate(booking.end)}
+          </p>
+
           <div className="attachments-list">
             {booking.attachments && booking.attachments.length > 0 ? (
               booking.attachments.map((link, index) => (
-                <li key={index} className="attachment">
-                  <a href={link} target="_blank" rel="noopener noreferrer">
-                    {link.split("/").pop()}
-                  </a>
-                </li>
+                <a
+                  href={link}
+                  className="attachment"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link.split("/").pop()}
+                </a>
               ))
             ) : (
               <p>no attachments</p>

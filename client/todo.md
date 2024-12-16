@@ -14,7 +14,7 @@ home dashboard
 PROTECTED
 history page which contains signed in users booking history for created and invited bookings
 
-## ViewBooking.js
+## BookingDetails.js (done)
 page that shows information about an existing booking 
 this is the booking url thats generated it looks like /booking/:booking_id
 
