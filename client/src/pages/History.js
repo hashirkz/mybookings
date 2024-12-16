@@ -35,19 +35,31 @@ function History() {
   }, []);
 
   // sorting the bookings
-  const sortedCreatedBookings = createdBookings.sort((booking1, booking2) => {
-    return new Date(booking2.start) - new Date(booking1.start);
-  });
+  const sortedCreatedBookings = [...createdBookings].sort(
+    (booking1, booking2) => {
+      return new Date(booking2.start) - new Date(booking1.start);
+    }
+  );
 
-  const sortedInvitedBookings = invitedBookings.sort((booking1, booking2) => {
-    return new Date(booking2.start) - new Date(booking1.start);
-  });
+  const sortedInvitedBookings = [...invitedBookings].sort(
+    (booking1, booking2) => {
+      return new Date(booking2.start) - new Date(booking1.start);
+    }
+  );
   return (
     <>
       <NavBar />
       <div className="history-container">
-        <BookingGallery bookings={sortedCreatedBookings} name="your bookings" />
-        <BookingGallery bookings={sortedInvitedBookings} name="your invited" />
+        <BookingGallery
+          bookings={sortedCreatedBookings}
+          name="your bookings"
+          deletable={true}
+        />
+        <BookingGallery
+          bookings={sortedInvitedBookings}
+          name="your invited"
+          deletable={false}
+        />
       </div>
     </>
   );
