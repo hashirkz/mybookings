@@ -7,6 +7,7 @@ import Booking from "./pages/Booking.js";
 import History from "./pages/History.js";
 import Request from "./pages/Request.js";
 import Landing from "./pages/Landing.js";
+import BookingDetails from "./pages/BookingDetails.js";
 import "./App.css";
 
 function App() {
@@ -15,6 +16,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
+        <Route
+          path="/booking-details/:booking_id"
+          element={<BookingDetails />}
+        />
 
         <Route
           path="/home"

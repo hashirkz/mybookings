@@ -10,7 +10,10 @@ function BookingGallery({ bookings, name }) {
       ) : (
         bookings.map((booking) => {
           return (
-            <a className="booking-item" href={`booking/${booking.booking_id}`}>
+            <a
+              className="booking-item"
+              href={`/booking-details/${booking.booking_id}`}
+            >
               <p>{booking.name}</p>
               <p>{booking.start}</p>
             </a>

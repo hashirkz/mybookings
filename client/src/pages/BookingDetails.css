@@ -1,0 +1,33 @@
+.booking-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-height: 100%;
+    overflow-y: scroll;
+}
+
+
+.attachment {
+    width: 70%;
+    height: 1em;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 1em;
+    padding: 0.7em 1.4em;
+    font-size: 0.8em;
+    background-color: var(--accent2);
+    border-radius: 15px;
+
+    transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin-left: 0;
+}
+
+.attachment:hover {
+    background-color: var(--accent1);
+    transform: scale(1.05);
+}

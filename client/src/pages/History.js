@@ -46,8 +46,8 @@ function History() {
     <>
       <NavBar />
       <div className="history-container">
-        <BookingGallery bookings={sortedCreatedBookings} name="created" />
-        <BookingGallery bookings={sortedInvitedBookings} name="invited" />
+        <BookingGallery bookings={sortedCreatedBookings} name="your bookings" />
+        <BookingGallery bookings={sortedInvitedBookings} name="your invited" />
       </div>
     </>
   );

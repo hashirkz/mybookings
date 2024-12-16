@@ -1,8 +1,19 @@
-import React from "react";
+import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Landing.css";
 
 const Landing = () => {
-
+  const [link, setLink] = useState("");
+  const navigate = useNavigate();
+  const handleKeyDown = (e) => {
+    if (e.key == "Enter") {
+      setLink(link);
+      if (link) {
+        const url = new URL(link);
+        navigate(url.pathname);
+      }
+    }
+  };
   return (
     <div className="layout-container">
       <div className="main-content">
@@ -22,6 +33,13 @@ const Landing = () => {
             </a>
           </p>
           <p>Have a Booking URL?</p>
+          <input
+            type="text"
+            className="input-text"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
         </div>
       </div>
     </div>
