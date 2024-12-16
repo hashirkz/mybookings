@@ -52,6 +52,12 @@
     cursor: default;
     box-shadow: none;
   }
+
+  .calendar-day.selected {
+    background-color: var(--accent2);
+    color: var(--txt);
+    font-weight: bold;
+  }  
   
   .calendar-day {
     display: flex;
