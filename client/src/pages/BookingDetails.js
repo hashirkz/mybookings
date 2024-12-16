@@ -1,27 +1,14 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { format_url } from "../conf.js";
+import { format_url, format_date } from "../conf.js";
 import "./BookingDetails.css";
+
 function BookingDetails() {
   const [booking, setBooking] = useState({});
   const [invited, setInvited] = useState([]);
   const [owner, setOwner] = useState("");
 
   const { booking_id } = useParams();
-
-  const fmtDate = (d) => {
-    let date = new Date(d);
-    let date_str = date.toLocaleString("en-US", {
-      month: "short",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    });
-
-    let fmtd_date = date_str.replace(", ", " ");
-    return fmtd_date;
-  };
 
   const fetchBooking = async (booking_id) => {
     const url = format_url({ endpoint: "/api/booking" }) + `/${booking_id}`;
@@ -66,8 +53,11 @@ function BookingDetails() {
       }
     };
     fetchMountData();
-  }, []);
+  }, [booking_id]);
 
+  if (!booking) {
+    return <p>loading</p>;
+  }
   return (
     <>
       <div className="booking-container">
@@ -77,7 +67,8 @@ function BookingDetails() {
             {booking.name} with {owner}
           </p>
           <p>
-            {fmtDate(booking.start)} to {fmtDate(booking.end)}
+            {format_date({ d: booking.start })} to{" "}
+            {format_date({ d: booking.end })}
           </p>
 
           <div className="attachments-list">

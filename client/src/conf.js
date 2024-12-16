@@ -7,4 +7,21 @@ const format_url = ({host=HOST, port=PORT, endpoint}) => {
     return `http://${host}:${port}${endpoint}`;
 }
 
-export { format_url }
+const format_date = ({
+  d,
+  options = {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  },
+}) => {
+  let date = new Date(d);
+  let date_str = date.toLocaleString("en-US", options);
+
+  let formatted = date_str.replace(", ", " ");
+  return formatted;
+};
+
+export { format_url, format_date };
