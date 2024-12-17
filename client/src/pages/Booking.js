@@ -9,7 +9,7 @@ function Booking() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [bookingName, setBookingName] = useState("");
-  const [startHour, setStartHour] = useState(1);
+  const [startHour, setStartHour] = useState(0);
   const [startMin, setStartMin] = useState(0);
   const [duration, setDuration] = useState({ hr: 0, min: 0 });
   const [attachments, setAttachments] = useState([]);
@@ -180,7 +180,7 @@ function Booking() {
           onChange={(e) => setBookingName(e.target.value)}
         />
         <TimeDropdown
-          length1={12}
+          length1={24}
           length2={60}
           selected1={startHour}
           selected2={startMin}
