@@ -20,15 +20,15 @@ response_format:
         }
     }
 */
-ROUTER.get("/:user_id", async(req, res) => {
+ROUTER.get("/:user_id", async (req, res) => {
     try {
         const user_id = req.params.user_id;
         const conn = await mongo_conn();
         const collection = conn.collection("users");
 
-        const data = await collection.findOne({ user_id: user_id});
+        const data = await collection.findOne({ user_id: user_id });
 
-        if(!data) {
+        if (!data) {
             return res.status(404).json({
                 status: "error",
                 msg: `user ${user_id} does not exist`,
@@ -40,14 +40,57 @@ ROUTER.get("/:user_id", async(req, res) => {
             msg: "found user",
             data: { user: data.user },
         });
-    }
-    catch(err) {
+    } catch (err) {
         res.status(500).json({
             status: "error",
             msg: "server error unable to retrieve user",
         });
     }
 });
+
+/*
+endpoint: /api/users?user=
+method: GET
+purpose: retrive the user_id for a user from their user *email*
+
+response_format:
+    {
+        status: "",
+        msg: "",
+        data: {
+            user_id: ""
+        }
+    }
+*/
+ROUTER.get("/", async (req, res) => {
+    try {
+        const user = req.query.user;
+        const conn = await mongo_conn();
+        const collection = conn.collection("users");
+
+        const data = await collection.findOne({ user: user });
+
+        if (!data) {
+            return res.status(404).json({
+                status: "error",
+                msg: `user ${user} does not exist`,
+            });
+        }
+
+        res.status(200).json({
+            status: "success",
+            msg: "found user",
+            data: { user_id: data.user_id },
+        });
+    } catch (err) {
+        res.status(500).json({
+            status: "error",
+            msg: "server error unable to retrieve user",
+        });
+    }
+});
+
+
 
 /*
 PROTECTED

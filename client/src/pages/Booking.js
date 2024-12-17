@@ -32,8 +32,6 @@ function Booking() {
     setSelectedDate(newSelectedDate);
   };
 
-  const handleCreateBooking = () => {};
-
   const handleAddInvited = () => {
     if (newInvited.trim()) {
       setInvited([...invited, newInvited]);
@@ -56,6 +54,112 @@ function Booking() {
   const handleRemoveAttachment = (index) => {
     const updated = attachments.filter((_, i) => i !== index);
     setAttachments(updated);
+  };
+
+  const fetchInvited = async (invited) => {
+    let url = "";
+    let resp = null;
+    let data = null;
+
+    const invitedUsers = await Promise.all(
+      invited.map(async (user) => {
+        url = format_url({ endpoint: "/api/users", q: { user: user } });
+        resp = await fetch(url, {
+          method: "GET",
+        });
+
+        if (resp.ok) {
+          data = await resp.json();
+          if (!data.data) {
+            alert(`user ${user} does not exist`);
+            return;
+          }
+          return data.data.user_id;
+        }
+      })
+    );
+
+    return invitedUsers.filter((user_id) => user_id !== null);
+  };
+
+  const calcStartEndTimes = (
+    currentDate,
+    startHour,
+    startMin,
+    durationHr,
+    durationMin
+  ) => {
+    startHour = parseInt(startHour);
+    startMin = parseInt(startMin);
+    durationHr = parseInt(durationHr);
+    durationMin = parseInt(durationMin);
+
+    const startDatetime = new Date(currentDate);
+    startDatetime.setHours(startHour, startMin, 0, 0);
+
+    const endDatetime = new Date(startDatetime);
+    endDatetime.setHours(startDatetime.getHours() + durationHr);
+    endDatetime.setMinutes(startDatetime.getMinutes() + durationMin);
+
+    const overflowMinutes = Math.floor(endDatetime.getMinutes() / 60);
+    endDatetime.setHours(endDatetime.getHours() + overflowMinutes);
+    endDatetime.setMinutes(endDatetime.getMinutes() % 60);
+
+    const formatDate = (date) => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const hour = String(date.getHours()).padStart(2, "0");
+      const minute = String(date.getMinutes()).padStart(2, "0");
+
+      return `${year}-${month}-${day} ${hour}:${minute}`;
+    };
+
+    return {
+      start: formatDate(startDatetime),
+      end: formatDate(endDatetime),
+    };
+  };
+
+  const handleCreateBooking = async (e) => {
+    e.preventDefault();
+    if (!bookingName.trim() || !invited) {
+      alert("you must include a booking name and and invite at least 1 user");
+      return;
+    }
+    const invitedUsers = await fetchInvited(invited);
+    const { start, end } = calcStartEndTimes(
+      currentDate,
+      startHour,
+      startMin,
+      duration.hr,
+      duration.min
+    );
+
+    const token = localStorage.getItem("token");
+    let booking = {
+      name: bookingName,
+      invited: invitedUsers,
+      start: start,
+      end: end,
+      attachments: attachments,
+    };
+    console.log(booking);
+
+    const url = format_url({ endpoint: "/api/booking" });
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    });
+
+    if (resp.ok) {
+      const data = await resp.json();
+      return data.data?.booking_id;
+    }
   };
 
   return (
@@ -113,6 +217,7 @@ function Booking() {
           handleRemove={(index) => handleRemoveAttachment(index)}
           handleAdd={handleAddAttachment}
         />
+        <button type="submit"> create new booking </button>
       </form>
     </>
   );

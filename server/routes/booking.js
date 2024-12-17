@@ -88,6 +88,9 @@ ROUTER.post("/", verify_jwt, async (req, res) => {
         res.status(201).json({
             status: "success",
             msg: "booking created successfully",
+            data: {
+                booking_id: booking_id,
+            },
         });
     } catch (err) {
         res.status(500).json({
