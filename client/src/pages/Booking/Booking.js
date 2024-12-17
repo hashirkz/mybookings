@@ -1,9 +1,9 @@
 import { React, useState, useEffect } from "react";
-import NavBar from "../components/NavBar/NavBar";
-import BookingCalendar from "../components/BookingCalendar/BookingCalendar";
-import TimeDropdown from "../components/TimeDropdown/TimeDropdown.js";
-import AddList from "../components/AddList/AddList.js";
-import { format_url, format_date } from "../conf.js";
+import NavBar from "../../components/NavBar/NavBar.js";
+import BookingCalendar from "../../components/BookingCalendar/BookingCalendar.js";
+import TimeDropdown from "../../components/TimeDropdown/TimeDropdown.js";
+import AddList from "../../components/AddList/AddList.js";
+import { format_url, format_date } from "../../conf.js";
 
 function Booking() {
   const [currentDate, setCurrentDate] = useState(new Date());

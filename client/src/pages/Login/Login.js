@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { format_url } from "../conf.js";
+import { format_url } from "../../conf.js";
 import "./Login.css";
 
 function Login() {

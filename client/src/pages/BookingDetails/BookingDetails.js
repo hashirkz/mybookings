@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { format_url, format_date } from "../conf.js";
+import { format_url, format_date } from "../../conf.js";
 import "./BookingDetails.css";
 
 function BookingDetails() {

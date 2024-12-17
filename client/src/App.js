@@ -1,13 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProtectedRoute from "./ProtectedRoute.js";
-import Login from "./pages/Login.js";
-import Home from "./pages/Home.js";
-import Booking from "./pages/Booking.js";
-import History from "./pages/History.js";
-import Request from "./pages/Request.js";
-import Landing from "./pages/Landing.js";
-import BookingDetails from "./pages/BookingDetails.js";
+import Booking from "./pages/Booking/Booking.js";
+import BookingDetails from "./pages/BookingDetails/BookingDetails.js";
+import History from "./pages/History/History.js";
+import Home from "./pages/Home/Home.js";
+import Landing from "./pages/Landing/Landing.js";
+import Login from "./pages/Login/Login.js";
+import Request from "./pages/Request/Request.js";
+
 import "./App.css";
 
 function App() {

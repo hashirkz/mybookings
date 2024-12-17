@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
-import NavBar from "../components/NavBar/NavBar.js";
-import BookingGallery from "../components/BookingGallery/BookingGallery.js";
-import { format_url } from "../conf.js";
+import NavBar from "../../components/NavBar/NavBar.js";
+import BookingGallery from "../../components/BookingGallery/BookingGallery.js";
+import { format_url } from "../../conf.js";
 import "./History.css";
 
 function History() {
