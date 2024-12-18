@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import AttachmentForm from "../AttachmentForm/AttachmentForm.js";
-import { format_date, format_url } from "../../conf.js";
-import { useNavigate } from "react-router-dom";
+import AttachmentForm from "../../components/AttachmentForm/AttachmentForm.js";
+import { format_date, format_url } from "../../conf";
+
 
 function BookingOnetime() {
     const [title, setTitle] = useState("");
@@ -9,8 +9,7 @@ function BookingOnetime() {
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const [message, setMessage] = useState("");
-    const navigate = useNavigate();
-
+    
     
     const validateInput = () => {
       if (startTime >= endTime) {
@@ -47,13 +46,7 @@ function BookingOnetime() {
   
       if (resp.ok) {
         const data = await resp.json();
-        const booking_id =  data.data?.booking_id;
-
-        if (booking_id) {
-            navigate(`/booking-details/${booking_id}`);
-        } else {
-            alert("Booking ID not found in response.");
-        }
+        return data.data?.booking_id;
       }
 
   };
