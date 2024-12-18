@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AttachmentForm from "../../components/AttachmentForm/AttachmentForm.js";
-import { format_date, format_url } from "../../conf";
+import AttachmentForm from "../AttachmentForm/AttachmentForm.js";
+import { format_date, format_url } from "../../conf.js";
 
 
 function BookingOnetime() {

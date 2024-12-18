@@ -8,9 +8,11 @@ const Landing = () => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       setLink(link);
-      if (link) {
+      try {
         const url = new URL(link);
         navigate(url.pathname);
+      } catch (err) {
+        navigate(`/booking-details/${link}`);
       }
     }
   };
@@ -39,6 +41,7 @@ const Landing = () => {
             value={link}
             onChange={(e) => setLink(e.target.value)}
             onKeyDown={handleKeyDown}
+            placeholder="Enter Booking ID or URL"
           />
         </div>
       </div>

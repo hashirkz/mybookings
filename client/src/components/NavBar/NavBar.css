@@ -60,7 +60,6 @@ img.navbar-logo {
   border: none;
   padding: 2%;
   border-radius: 5px;
-  cursor: pointer;
   font-size: 100%;
   transition: background-color 0.3s;
   text-decoration: none;
@@ -78,7 +77,6 @@ img.navbar-logo {
   padding: 16px;
   font-size: 16px;
   border: none;
-  cursor: pointer;
 }
 
 .dropdown {
