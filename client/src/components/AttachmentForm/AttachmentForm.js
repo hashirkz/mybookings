@@ -13,7 +13,7 @@ function AttachmentForm({ onSubmitComment }) {
 
     return (
         <div className="forms">
-            <label>Optional Comments:</label>
+            <label>Message:</label>
             <form onSubmit={handleSubmit}>
                 <label >
                     <textarea 
@@ -21,7 +21,7 @@ function AttachmentForm({ onSubmitComment }) {
                         style={{width: "100%"}}
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
-                        placeholder="Enter your comments here..."
+                        placeholder="Optional Message"
                     />
                 </label>
             </form>

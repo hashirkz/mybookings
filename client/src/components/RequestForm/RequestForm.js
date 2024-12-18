@@ -32,8 +32,6 @@ function RequestForm() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Send a Request</h2>
-
             <div className="forms">
                 <label>Date:</label>
                 <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
@@ -61,7 +59,7 @@ function RequestForm() {
             </div>
             
             <div className="forms">
-                <label>Invite Emails:</label>
+                <label>Invite Email:</label>
                     {emails.map((email, index) => (
                         <div  key={index} style={{ marginBottom: "0.5em" }}>
                         <input 

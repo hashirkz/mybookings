@@ -1,9 +1,10 @@
 import { React, useState, useEffect } from "react";
 import NavBar from "../../components/NavBar/NavBar.js";
-import BookingCalendar from "../../components/BookingCalendar/BookingCalendar.js";
-import TimeDropdown from "../../components/TimeDropdown/TimeDropdown.js";
-import AddList from "../../components/AddList/AddList.js";
+import BookingOnetime from "../../components/BookingOnetime/BookingOnetime.js";
+import BookingPoll from "../../components/BookingPoll/BookingPoll.js";
+import BookingRecurring  from "../../components/BookingRecurring/BookingReoccur.js";
 import { format_url, format_date } from "../../conf.js";
+import "../Request/Request.css";
 
 function Booking() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -16,6 +17,8 @@ function Booking() {
   const [newAttachment, setNewAttachment] = useState("");
   const [invited, setInvited] = useState([]);
   const [newInvited, setNewInvited] = useState("");
+  const [activeTab, setActiveTab] = useState("recurring");
+  
 
   const changeMonth = (direction) => {
     const newDate = new Date(currentDate);
@@ -164,61 +167,32 @@ function Booking() {
 
   return (
     <>
+    <div className="container">
       <NavBar />
-      <BookingCalendar
-        currentDate={currentDate}
-        selectedDate={selectedDate}
-        changeMonth={changeMonth}
-        handleSelectedDate={handleSelectedDate}
-      />
-      <form onSubmit={handleCreateBooking}>
-        <input
-          name="name"
-          type="text"
-          placeholder="booking name: "
-          value={bookingName}
-          onChange={(e) => setBookingName(e.target.value)}
-        />
-        <TimeDropdown
-          length1={24}
-          length2={60}
-          selected1={startHour}
-          selected2={startMin}
-          handleChange1={(e) => setStartHour(e.target.value)}
-          handleChange2={(e) => setStartMin(e.target.value)}
-        />
-        <TimeDropdown
-          length1={100}
-          length2={60}
-          selected1={duration.hr}
-          selected2={duration.min}
-          handleChange1={(e) =>
-            setDuration({ hr: e.target.value, min: duration.min })
-          }
-          handleChange2={(e) =>
-            setDuration({ hr: duration.hr, min: e.target.value })
-          }
-        />
+      <div className="booking">
+        <h1>Book a Meeting</h1>
+        <div className="tabs">
+          <button onClick={() => setActiveTab("recurring")} className={`tab ${activeTab === "recurring" ? "active" : ""}`}>
+            Recurring Meeting
+          </button>
+          <button onClick={() => setActiveTab("onetime")} className={`tab ${activeTab === "onetime" ? "active" : ""}`}>
+            One-Time Meeting
+          </button>
+          <button onClick={() => setActiveTab("poll")} className={`tab ${activeTab === "poll" ? "active" : ""}`}>
+            Meeting Poll
+          </button>
+        </div>
 
-        <AddList
-          name="invited"
-          list={invited}
-          newItem={newInvited}
-          setNewItem={setNewInvited}
-          handleRemove={(index) => handleRemoveInvited(index)}
-          handleAdd={handleAddInvited}
-        />
+        <div>
+          {activeTab === "recurring" && <BookingRecurring />}
+          {activeTab === "onetime" && <BookingOnetime />}
+          {activeTab === "poll" && <BookingPoll />}
+        </div>
+      </div>
 
-        <AddList
-          name="attachments"
-          list={attachments}
-          newItem={newAttachment}
-          setNewItem={setNewAttachment}
-          handleRemove={(index) => handleRemoveAttachment(index)}
-          handleAdd={handleAddAttachment}
-        />
-        <button type="submit"> create new booking </button>
-      </form>
+    </div>
+      
+      
     </>
   );
 }

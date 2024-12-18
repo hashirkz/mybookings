@@ -2,12 +2,14 @@ h1, h2{
     text-align: center;
 }
 
+.container{
+    width: 100%
+}
 
 input, .comments {
     width: 50%;
     padding: 10px;
     margin: 20px;
-    border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1em;
     box-sizing: border-box;
@@ -96,5 +98,6 @@ button.tab:hover {
     justify-content: center;  
     align-items: center;      
     gap: 15px;                
-    margin: 20px 0;           
+    margin: 20px 0;   
+    font-size: 1.5em;  
 }
