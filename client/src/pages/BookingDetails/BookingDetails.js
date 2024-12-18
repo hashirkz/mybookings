@@ -96,10 +96,7 @@ function BookingDetails() {
             {booking.type === "onetime" ? (<ItemOnetime booking={booking} />) : (<></>)}
             {booking.type === "recurring" ? (<ItemRecurring booking={booking} />) : (<></>)}
 
-
           </div>
-
-
         </div>
         <div className="booking-info">
           <h1>invited</h1>

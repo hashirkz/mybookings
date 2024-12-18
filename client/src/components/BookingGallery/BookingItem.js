@@ -7,8 +7,8 @@ function BookingItem({ booking, deletable, handleDelete }) {
         className="booking-item"
         href={`/booking-details/${booking.booking_id}`}
       >
-        <p>{booking.name}</p>
-        <p>{booking.start}</p>
+        <p>{booking.title}</p>
+        <p>{booking.type}</p>
         {deletable && (
           <button
             className="delete-booking"
