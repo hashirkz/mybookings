@@ -55,7 +55,7 @@ img.navbar-logo {
 }
 
 .navbar-right .logout-button {
-  background-color: var(--accent2);
+  background-color: var(--accent1);
   color: var(--txt);
   border: none;
   padding: 0.5em 1.5em;
@@ -67,7 +67,9 @@ img.navbar-logo {
 }
 
 .navbar-right .logout-button:hover {
-  background-color: var(--accent1);
+  background-color: var(--txt);
+  color: var(--accent1);
+
 }
 
 .dropbtn {
