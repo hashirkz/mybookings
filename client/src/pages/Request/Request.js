@@ -14,7 +14,6 @@ function Request() {
         <h1>Send a Request</h1>
         <RequestForm></RequestForm>
       </div>
-      <Dropdown></Dropdown>
     </div>
 
     </>

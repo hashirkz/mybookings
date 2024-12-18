@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { format_date } from "../../conf";
+import { format_date, format_url } from "../../conf";
 import AttachmentForm from "../../components/AttachmentForm/AttachmentForm.js";
 
 
 function RequestForm() {
-    const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const [emails, setEmails] = useState([""]);
-
+    const [message, setMessage] = useState("");
+    
     const handleEmailChange = (index, value) => {
         const newEmails = [...emails];
         newEmails[index] = value;
@@ -25,10 +25,50 @@ function RequestForm() {
         setEmails(newEmails);
     };
 
+    const validateInput = () => {
+        if (startTime >= endTime) {
+            alert("End time must be after start time.");
+            return false;
+        }
 
-    const handleSubmit = (e) => {
+        if (!emails.length === 0 || emails === null) {
+            alert("Must invite at least one email.");
+            return false;
+        }
+        return true;
+     };
+
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-    };
+        if (!validateInput()) return;
+
+        const token = localStorage.getItem("token"); 
+        console.log(emails)
+        let request = {
+            dates: date,
+            emails: emails, 
+            startTimes: startTime,
+            endTimes: endTime,
+            message: message,  
+        };
+        console.log(request);
+
+        const url = format_url({ endpoint: "/api/booking" });
+        const resp = await fetch(url, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+        });
+
+        if (resp.ok) {
+        const data = await resp.json();
+        return data.data?.booking_id;
+        }
+  };
 
     return (
         <form onSubmit={handleSubmit}>
@@ -51,10 +91,10 @@ function RequestForm() {
             <div className="forms">
             <label>End Time:</label>
             <input
-            type="time"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            required
+                type="time"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                required
             />
             </div>
             
@@ -79,7 +119,7 @@ function RequestForm() {
                         </div>
                     ))}
             </div>
-            <AttachmentForm></AttachmentForm>
+            <AttachmentForm message={message} setMsg={setMessage}/>
             
             <div className="button-submit">
                 <button type="button" onClick={addEmail}>

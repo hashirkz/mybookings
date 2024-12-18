@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { format_date } from "../../conf";
+import { format_date, format_url } from "../../conf";
 import AttachmentForm from "../../components/AttachmentForm/AttachmentForm.js";
 
 
@@ -8,6 +8,7 @@ function BookingPoll() {
     const [options, setOptions] = useState([
         { date: "", startTime: "", endTime: "" },
     ]);
+    const [message, setMessage] = useState("");
 
     const addOption = () => {
         setOptions([...options, { date: "", startTime: "", endTime: "" }]);
@@ -22,30 +23,52 @@ function BookingPoll() {
     const deleteOption = (index) => {
         const newOptions = options.filter((_, i) => i !== index);
         setOptions(newOptions);
+        
     };
 
-    const validateOptions = () => {
+    const validateInput = () => {
         for (const option of options) {
-        if (!option.date || !option.startTime || !option.endTime) {
-            alert("All fields (date, start time, end time) are required.");
-            return false;
-        }
-        if (option.startTime >= option.endTime) {
-            alert("End time must be after start time.");
-            return false;
-        }
+            if (option.startTime >= option.endTime) {
+                alert("End time must be after start time.");
+                return false;
+            }
         }
         return true;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!validateOptions()) return;
+        if (!validateInput()) return;
+        
+        const token = localStorage.getItem("token");
+        const dates = options.map(option => option.date);
+        const startTimes = options.map(option => option.startTime);
+        const endTimes = options.map(option => option.endTime);
+        let booking = {
+            type: "poll",
+            title: title,
+            dates: dates, 
+            startTimes: startTimes,
+            endTimes: endTimes,
+            message: message,  
+        };
+        console.log(booking);
 
-        const formattedOptions = options.map(
-        (option) => `${option.date} (${option.startTime} to ${option.endTime})`
-        );
-        alert(`Meeting Poll Created:\nTitle: ${title}\nOptions:\n${formattedOptions.join("\n")}`);
+        const url = format_url({ endpoint: "/api/booking" });
+        const resp = await fetch(url, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(booking),
+        });
+    
+        if (resp.ok) {
+            const data = await resp.json();
+            return data.data?.booking_id;
+        }
+
     };
 
     return (
@@ -75,7 +98,6 @@ function BookingPoll() {
                     onChange={(e) => handleOptionChange(index, "date", e.target.value)}
                     required
                 />
-
             </div>
             
 
@@ -97,9 +119,7 @@ function BookingPoll() {
                         value={option.endTime}
                         onChange={(e) => handleOptionChange(index, "endTime", e.target.value)}
                         required
-                    />
-
-                
+                    />                
                 <button
                     className="delete"
                     type="button"
@@ -111,11 +131,11 @@ function BookingPoll() {
             </div>
             </div>
         ))}
-        <AttachmentForm></AttachmentForm>
+        <AttachmentForm message={message} setMsg={setMessage}/>
 
         <div className="button-submit">
             <button type="button" onClick={addOption}>
-                + Add Date Option
+                + Add Option
             </button>
             <button type="submit">Create Poll</button>
             </div>

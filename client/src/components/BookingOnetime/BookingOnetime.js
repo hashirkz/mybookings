@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AttachmentForm from "../../components/AttachmentForm/AttachmentForm.js";
+import { format_date, format_url } from "../../conf";
 
 
 function BookingOnetime() {
@@ -7,12 +8,48 @@ function BookingOnetime() {
     const [date, setDate] = useState("");
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
+    const [message, setMessage] = useState("");
     
+    
+    const validateInput = () => {
+      if (startTime >= endTime) {
+          alert("End time must be after start time.");
+          return false;
+      }
+      return true;
+   };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        alert(`One-Time Meeting Scheduled:\nTitle: ${title}\nDate: ${date}\nStart Tim: ${startTime}\nEnd Time:${endTime}`);
-    };
+   const handleSubmit = async (e) => {
+      e.preventDefault();
+      if (!validateInput()) return;
+      
+      const token = localStorage.getItem("token");
+      let booking = {
+          type: "onetime",
+          title: title,
+          dates: date, 
+          startTimes: startTime,
+          endTimes: endTime,
+          message: message,  
+      };
+      console.log(booking);
+
+      const url = format_url({ endpoint: "/api/booking" });
+      const resp = await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(booking),
+      });
+  
+      if (resp.ok) {
+        const data = await resp.json();
+        return data.data?.booking_id;
+      }
+
+  };
 
     return (
         <form onSubmit={handleSubmit}>
@@ -54,7 +91,7 @@ function BookingOnetime() {
           />
         </div>
 
-        <AttachmentForm></AttachmentForm>
+        <AttachmentForm message={message} setMsg={setMessage}/>
 
         <div className="button-submit">
           <button type="submit">Create One-Time Meeting URL</button>

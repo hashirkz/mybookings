@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 120vh;
+    height: 100%;
     overflow-x: hidden;
 }
 
@@ -15,6 +15,19 @@
     justify-content: space-evenly;
     width: 40vw;
     height: 30vh;
+}
+
+.logo {
+    display: flex;
+    font-size: 1em;
+    align-items: center;
+    font-size: 2em;
+
+    letter-spacing: 0.1em;
+    margin: 1em;
+    text-align: center;
+    color: var(--accent1);
+    font-weight: bold;
 }
 
 .input-text, .input-button {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { format_date } from "../../conf";
+import { format_date, format_url } from "../../conf";
 import AttachmentForm from "../../components/AttachmentForm/AttachmentForm.js";
 
 
@@ -10,26 +10,63 @@ function BookingRecurring() {
     const [endTime, setEndTime] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
+    const [message, setMessage] = useState("");
+    
   
-    const handleDayChange = (event) => {
-      const { value, checked } = event.target;
+    const handleDayChange = (e) => {
+      const { value, checked } = e.target;
       setDays((prevDays) =>
         checked ? [...prevDays, value] : prevDays.filter((day) => day !== value)
       );
     };
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      if (!title || !days.length || !startTime || !endTime) {
-        alert("Please fill out all required fields.");
-        return;
+
+    const validateInput = () => {
+      if (startTime >= endTime) {
+          alert("End time must be after start time.");
+          return false;
       }
+      if (days.length === 0 || days === null) {
+        alert("Please pick a day to repeat each week.");
+        return false;
+    }
+      return true;
+   };
   
-      let message = `Recurring Meeting Scheduled:\nTitle: ${title}\nDays: ${days.join(", ")}\nTime: ${startTime} to ${endTime}`;
-  
-  
-      alert(message);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateInput()) return;
+
+    const token = localStorage.getItem("token"); 
+    console.log(days);
+
+    let booking = {
+        type: "recurring",
+        title: title,
+        days: days, 
+        startTimes: startTime,
+        endTimes: endTime,
+        startDate: startDate,
+        endDate: endDate,
+        message: message,  
     };
+    console.log(booking);
+
+    const url = format_url({ endpoint: "/api/booking" });
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    });
+
+    if (resp.ok) {
+      const data = await resp.json();
+      return data.data?.booking_id;
+    }
+  };
+
   
     return (
       <form onSubmit={handleSubmit}>
@@ -105,7 +142,7 @@ function BookingRecurring() {
             required
           />
         </div> 
-        <AttachmentForm></AttachmentForm>
+        <AttachmentForm message={message} setMsg={setMessage}/>
         <div className="button-submit">
           <button type="submit">Create Recurring Meeting URL</button>
         </div>

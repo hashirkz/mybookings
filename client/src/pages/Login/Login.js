@@ -46,6 +46,7 @@ function Login() {
   return (
     <>
       <div className="login-container">
+        <div className="logo"><img src="/logo-background.png" className="navbar-logo" alt="Logo"></img>myBookings</div>
         <form className="login-form" onSubmit={handleLogin}>
           <input
             name="user"

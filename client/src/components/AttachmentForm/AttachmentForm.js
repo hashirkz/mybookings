@@ -1,30 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 
-function AttachmentForm({ onSubmitComment }) {
-    const [comment, setComment] = useState("");
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (comment.trim()) {
-            onSubmitComment(comment); 
-            setComment(""); 
-        }
-    };
+function AttachmentForm({ msg, setMsg  }) {
 
     return (
         <div className="forms">
             <label>Message:</label>
-            <form onSubmit={handleSubmit}>
-                <label >
-                    <textarea 
-                        className="comments" 
-                        style={{width: "100%"}}
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        placeholder="Optional Message"
-                    />
-                </label>
-            </form>
+            <textarea 
+                className="comments" 
+                style={{width: "100%"}}
+                value={msg}
+                onChange={(e) => setMsg(e.target.value)}
+                placeholder="Optional Message"
+            />
         </div>
     );
 }
