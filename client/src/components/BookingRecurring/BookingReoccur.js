@@ -6,6 +6,8 @@ function BookingRecurring() {
     const [days, setDays] = useState([]);
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
   
     const handleDayChange = (event) => {
       const { value, checked } = event.target;
@@ -30,49 +32,81 @@ function BookingRecurring() {
     return (
       <form onSubmit={handleSubmit}>
         <h2>Recurring Meeting</h2>
-  
-        <label>Meeting Title:</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-  
-        <label>Days of the Week:</label>
-        <div>
-          {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(
-            (day) => (
-              <label key={day} style={{ marginRight: "10px" }}>
-                <input
-                  type="checkbox"
-                  value={day}
-                  checked={days.includes(day)}
-                  onChange={handleDayChange}
-                />
-                {day}
-              </label>
-            )
-          )}
+
+        <div className="forms">
+          <label>Meeting Title:</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
         </div>
-  
-        <label>Start Time:</label>
-        <input
-          type="time"
-          value={startTime}
-          onChange={(e) => setStartTime(e.target.value)}
-          required
-        />
-  
-        <label>End Time:</label>
-        <input
-          type="time"
-          value={endTime}
-          onChange={(e) => setEndTime(e.target.value)}
-          required
-        />
-  
-        <button type="submit">Create Recurring Meeting</button>
+
+        <div className="forms">
+          <label>Start Date:</label>
+          <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              required
+          />
+
+        </div>
+        <div className="forms">
+          <label>End Date:</label>
+          <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              required
+          />
+
+        </div>
+       
+        <div className="forms">
+          <label>Days of the Week:</label>
+          <div>
+            {["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"].map(
+              (day) => (
+                <label key={day}>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    value={day}
+                    checked={days.includes(day)}
+                    onChange={handleDayChange}
+                  />
+                  {day}
+                </label>
+              )
+            )}
+          </div>
+        </div>
+        
+        <div className="forms">
+          <label>Start Time:</label>
+          <input
+            type="time"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="forms">
+          <label>End Time:</label>
+          <input
+            type="time"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
+            required
+          />
+        </div> 
+        <div className="button-submit">
+          <button type="submit">Create Recurring Meeting URL</button>
+        </div>
+        
       </form>
     );
   }

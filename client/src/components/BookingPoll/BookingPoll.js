@@ -49,50 +49,64 @@ function BookingPoll() {
     return (
         <form onSubmit={handleSubmit}>
         <h2>Meeting Poll</h2>
+        <div className="forms">
 
-        <label>Poll Title:</label>
-        <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-        />
+            <label>Poll Title:</label>
+            <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+            />
+        </div>
 
-        <label>Options for Voting:</label>
+        <label style={{ marginLeft: "30%", fontWeight:"bolder", color: "#b44a6d" }}>Options for Voting:</label>
         {options.map((option, index) => (
             <div
             key={index}
             >
-            <label>Date:</label>
-            <input
-                type="date"
-                value={option.date}
-                onChange={(e) => handleOptionChange(index, "date", e.target.value)}
-                required
-            />
+            <div className="forms">
+                <label>Date:</label>
+                <input
+                    type="date"
+                    value={option.date}
+                    onChange={(e) => handleOptionChange(index, "date", e.target.value)}
+                    required
+                />
 
-            <label>Start Time:</label>
-            <input
-                type="time"
-                value={option.startTime}
-                onChange={(e) => handleOptionChange(index, "startTime", e.target.value)}
-                required
-            />
+            </div>
+            
 
-            <label>End Time:</label>
-            <input
-                type="time"
-                value={option.endTime}
-                onChange={(e) => handleOptionChange(index, "endTime", e.target.value)}
-                required
-            />
+            <div className="forms">
+                <label>Start Time:</label>
+                <input
+                    type="time"
+                    value={option.startTime}
+                    onChange={(e) => handleOptionChange(index, "startTime", e.target.value)}
+                    required
+                />
+            </div>
 
-            <button
-                type="button"
-                onClick={() => deleteOption(index)}
-            >
-                Delete Option
-            </button>
+            <div className="delete-input">
+                <div className="forms">
+                    <label>End Time:</label>
+                    <input
+                        type="time"
+                        value={option.endTime}
+                        onChange={(e) => handleOptionChange(index, "endTime", e.target.value)}
+                        required
+                    />
+
+                
+                <button
+                    className="delete"
+                    type="button"
+                    onClick={() => deleteOption(index)}
+                >
+                    Delete Option
+                </button>
+                </div>
+            </div>
             </div>
         ))}
 
@@ -101,9 +115,9 @@ function BookingPoll() {
         </button>
 
 
-        <button type="submit" >
-            Create Poll
-        </button>
+        <div className="button-submit">
+          <button type="submit">Create Poll</button>
+        </div>
         </form>
     );
 }

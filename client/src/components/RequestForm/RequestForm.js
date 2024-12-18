@@ -31,17 +31,24 @@ function RequestForm() {
     return (
         <form onSubmit={handleSubmit}>
             <h2>Send a Request</h2>
+
+            <div className="forms">
+                <label>Date:</label>
+                <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+            </div>
             
-            <label>Date:</label>
-            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
-            <label>Start Time:</label>
-            <input
-            type="time"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            required
-            />
-    
+            
+            <div className="forms">
+                <label>Start Time:</label>
+                <input
+                    type="time"
+                    value={startTime}
+                    onChange={(e) => setStartTime(e.target.value)}
+                    required
+                />
+            </div>
+            
+            <div className="forms">
             <label>End Time:</label>
             <input
             type="time"
@@ -49,29 +56,36 @@ function RequestForm() {
             onChange={(e) => setEndTime(e.target.value)}
             required
             />
-
-        <label>Invite Emails:</label>
-            {emails.map((email, index) => (
-                <div key={index} style={{ marginBottom: "0.5em" }}>
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => handleEmailChange(index, e.target.value)}
-                    required
-                    placeholder="Enter email"
-                />
-                <button
-                    type="button"
-                    onClick={() => removeEmail(index)}
-                >
-                    Remove
+            </div>
+            
+            <div className="forms">
+                <label>Invite Emails:</label>
+                    {emails.map((email, index) => (
+                        <div key={index} style={{ marginBottom: "0.5em" }}>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => handleEmailChange(index, e.target.value)}
+                            required
+                            placeholder="Enter email"
+                        />
+                        <button
+                            className="delete"
+                            type="button"
+                            onClick={() => removeEmail(index)}
+                        >
+                            Remove
+                        </button>
+                        </div>
+                    ))}
+            </div>
+            
+            <div className="button-submit">
+                <button type="button" onClick={addEmail}>
+                    + Add Email
                 </button>
-                </div>
-            ))}
-
-            <button type="button" onClick={addEmail}>
-                + Add Email
-            </button>
+                <button type="submit">Create Request</button>
+            </div>
         </form>
     );
 }

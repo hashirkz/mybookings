@@ -6,7 +6,7 @@ const Landing = () => {
   const [link, setLink] = useState("");
   const navigate = useNavigate();
   const handleKeyDown = (e) => {
-    if (e.key == "Enter") {
+    if (e.key === "Enter") {
       setLink(link);
       if (link) {
         const url = new URL(link);

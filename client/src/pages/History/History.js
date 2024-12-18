@@ -19,7 +19,7 @@ function History() {
 
       if (resp.ok) {
         setBookings((current) => {
-          return current.filter((booking) => booking.booking_id != booking_id);
+          return current.filter((booking) => booking.booking_id !== booking_id);
         });
       }
     } catch (err) {
@@ -37,7 +37,7 @@ function History() {
     });
     if (resp.ok) {
       const data = await resp.json();
-      type == "created"
+      type === "created"
         ? setCreatedBookings(data.data)
         : setInvitedBookings(data.data);
     } else {
