@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { format_date, format_url } from "../../conf.js";
 import AttachmentForm from "../AttachmentForm/AttachmentForm.js";
+import { useNavigate } from "react-router-dom";
 
 
 function BookingRecurring() {
@@ -11,7 +12,7 @@ function BookingRecurring() {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [message, setMessage] = useState("");
-    
+    const navigate = useNavigate();
   
     const handleDayChange = (e) => {
       const { value, checked } = e.target;
@@ -63,7 +64,12 @@ function BookingRecurring() {
 
     if (resp.ok) {
       const data = await resp.json();
-      return data.data?.booking_id;
+      const booking_id =  data.data?.booking_id;
+      if (booking_id) {
+          navigate(`/booking-details/${booking_id}`);
+      } else {
+          alert("Booking ID not found in response.");
+      }
     }
   };
 

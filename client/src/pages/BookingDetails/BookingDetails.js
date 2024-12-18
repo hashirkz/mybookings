@@ -1,6 +1,9 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { format_url, format_date } from "../../conf.js";
+import ItemOnetime from "../../components/BookingItems/ItemOnetime.js";
+import ItemPoll from "../../components/BookingItems/ItemPoll.js";
+import ItemRecurring from "../../components/BookingItems/ItemRecurring.js";
 import "./BookingDetails.css";
 
 function BookingDetails() {
@@ -36,6 +39,16 @@ function BookingDetails() {
     return "unknown";
   };
 
+  const copyLink = (link) => {
+    navigator.clipboard.writeText(link)
+    .then(() => {
+      console.log(link);
+      })
+    .catch((error) => {
+        console.error("Failed to copy: ", error);
+      });
+  }
+
   // fetch bookings and invited users on mount
   useEffect(() => {
     const fetchMountData = async () => {
@@ -46,10 +59,10 @@ function BookingDetails() {
         const ownerData = await fetchUser(bookingData.user_id);
         setOwner(ownerData);
 
-        const invitedData = await Promise.all(
+        /*const invitedData = await Promise.all(
           bookingData.invited.map((user_id) => fetchUser(user_id))
         );
-        setInvited(invitedData);
+        setInvited(invitedData);*/
       }
     };
     fetchMountData();
@@ -60,33 +73,33 @@ function BookingDetails() {
   }
   return (
     <>
+      <a href="/home" className="logo">
+        <img src="/logo-background.png" className="navbar-logo" alt="Logo"></img>
+          myBookings
+      </a>
+    
+    <div className="copy">
+      <p>Booking ID: {booking_id}</p>
+      <button onClick={() => copyLink(booking_id)} >Copy Booking ID</button>
+      <button onClick={() => copyLink(window.location.href)}>Copy URL</button>
+    </div>
+
       <div className="booking-container">
         <div className="booking-info">
           <h1>details</h1>
           <p>
-            {booking.name} with {owner}
-          </p>
-          <p>
-            {format_date({ d: booking.start })} to{" "}
-            {format_date({ d: booking.end })}
+            {booking.title} with {owner}
           </p>
 
-          <div className="attachments-list">
-            {booking.attachments && booking.attachments.length > 0 ? (
-              booking.attachments.map((link, index) => (
-                <a
-                  href={link}
-                  className="attachment"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {link.split("/").pop()}
-                </a>
-              ))
-            ) : (
-              <p>no attachments</p>
-            )}
+          <div>
+            {booking.type === "poll" ? (<ItemPoll booking={booking} />) : (<></>)}
+            {booking.type === "onetime" ? (<ItemOnetime booking={booking} />) : (<></>)}
+            {booking.type === "recurring" ? (<ItemRecurring booking={booking} />) : (<></>)}
+
+
           </div>
+
+
         </div>
         <div className="booking-info">
           <h1>invited</h1>
