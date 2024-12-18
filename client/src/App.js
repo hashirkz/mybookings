@@ -8,7 +8,7 @@ import Home from "./pages/Home/Home.js";
 import Landing from "./pages/Landing/Landing.js";
 import Login from "./pages/Login/Login.js";
 import Request from "./pages/Request/Request.js";
-import SignUpFormPage from "./pages/SignUp/SignUpFormPage.js";
+// import SignUpFormPage from "./pages/SignUp/SignUpFormPage.js";
 
 import "./App.css";
 
@@ -55,14 +55,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route 
+        {/* <Route 
           path="/signup-form"
           element={
             <ProtectedRoute>
               <SignUpFormPage />
             </ProtectedRoute>
           }
-        />
+        /> */}
       </Routes>
     </Router>
   );

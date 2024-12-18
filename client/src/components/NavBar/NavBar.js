@@ -31,7 +31,7 @@ function NavBar() {
       <div className="navbar-right">
         <a href="/request" className="navbar-link">Request</a>
         <a href="/booking" className="navbar-link">Booking</a>
-        <a href="/home" className="navbar-link">History</a>
+        <a href="/history" className="navbar-link">History</a>
         <button className="logout-button" onClick={handleLogout}>Log Out</button>
       </div>
       <Dropdown/>
