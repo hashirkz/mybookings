@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from "react";
 import NavBar from "../../components/NavBar/NavBar.js";
-import BookingOnetime from "../../components/BookingOnetime/BookingOnetime.js";
-import BookingPoll from "../../components/BookingPoll/BookingPoll.js";
-import BookingRecurring  from "../../components/BookingRecurring/BookingReoccur.js";
+import BookingOnetime from "../../components/BookingForms/BookingOnetime.js";
+import BookingPoll from "../../components/BookingForms/BookingPoll.js";
+import BookingRecurring from "../../components/BookingForms/BookingReoccur.js";
 import { format_url, format_date } from "../../conf.js";
 import "../Request/Request.css";
 

@@ -67,7 +67,7 @@ function Login() {
           </button>
         </form>
         <div className="signup-container">
-          <p>dont have an account?</p>
+          <p>Don't have an account?</p>
           <button className="input-button" onClick={handleSignup}>
             Sign Up
           </button>
