@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { format_date } from "../../conf";
+import AttachmentForm from "../../components/AttachmentForm/AttachmentForm.js";
+
 
 function BookingRecurring() {
     const [title, setTitle] = useState("");
@@ -103,6 +105,7 @@ function BookingRecurring() {
             required
           />
         </div> 
+        <AttachmentForm></AttachmentForm>
         <div className="button-submit">
           <button type="submit">Create Recurring Meeting URL</button>
         </div>

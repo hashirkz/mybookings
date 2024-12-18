@@ -71,7 +71,7 @@ function History() {
       <div className="history-container">
         <BookingGallery
           bookings={createdBookings}
-          name="your bookings"
+          name="Your Bookings"
           deletable={true}
           handleDelete={(booking_id) =>
             handleDelete(booking_id, setCreatedBookings)
@@ -79,7 +79,7 @@ function History() {
         />
         <BookingGallery
           bookings={invitedBookings}
-          name="your invited"
+          name="Your Invites"
           deletable={false}
         />
       </div>

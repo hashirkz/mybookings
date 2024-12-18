@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { format_date } from "../../conf";
+import AttachmentForm from "../../components/AttachmentForm/AttachmentForm.js";
+
 
 function BookingPoll() {
     const [title, setTitle] = useState("");
@@ -109,15 +111,14 @@ function BookingPoll() {
             </div>
             </div>
         ))}
-
-        <button type="button" onClick={addOption}>
-            + Add Date Option
-        </button>
-
+        <AttachmentForm></AttachmentForm>
 
         <div className="button-submit">
-          <button type="submit">Create Poll</button>
-        </div>
+            <button type="button" onClick={addOption}>
+                + Add Date Option
+            </button>
+            <button type="submit">Create Poll</button>
+            </div>
         </form>
     );
 }

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { format_date } from "../../conf";
+import AttachmentForm from "../../components/AttachmentForm/AttachmentForm.js";
+
 
 function RequestForm() {
     const [title, setTitle] = useState("");
@@ -61,8 +63,8 @@ function RequestForm() {
             <div className="forms">
                 <label>Invite Emails:</label>
                     {emails.map((email, index) => (
-                        <div key={index} style={{ marginBottom: "0.5em" }}>
-                        <input
+                        <div  key={index} style={{ marginBottom: "0.5em" }}>
+                        <input 
                             type="email"
                             value={email}
                             onChange={(e) => handleEmailChange(index, e.target.value)}
@@ -75,10 +77,11 @@ function RequestForm() {
                             onClick={() => removeEmail(index)}
                         >
                             Remove
-                        </button>
+                        </button>                        
                         </div>
                     ))}
             </div>
+            <AttachmentForm></AttachmentForm>
             
             <div className="button-submit">
                 <button type="button" onClick={addEmail}>

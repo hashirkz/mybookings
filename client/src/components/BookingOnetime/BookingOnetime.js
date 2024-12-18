@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import AttachmentForm from "../../components/AttachmentForm/AttachmentForm.js";
+
 
 function BookingOnetime() {
     const [title, setTitle] = useState("");
@@ -51,6 +53,9 @@ function BookingOnetime() {
             required
           />
         </div>
+
+        <AttachmentForm></AttachmentForm>
+
         <div className="button-submit">
           <button type="submit">Create One-Time Meeting URL</button>
         </div>
