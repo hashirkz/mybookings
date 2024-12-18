@@ -6,10 +6,19 @@ import Dropdown from "./Dropdown";
 function NavBar() {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  }
+  const handleLogout = async () => {
+    try {
+        // notifying server
+        await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+
+        navigate('/login');
+    } catch (error) {
+        console.error('Logout failed:', error);
+    }
+  };
   
   return (
     <div className="navbar">

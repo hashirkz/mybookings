@@ -41,6 +41,7 @@ function Login() {
   const handleSignup = async (e) => {
     e.preventDefault();
     handleAuth("/api/auth/signup");
+    navigate("/signup-form");
   };
 
   return (
