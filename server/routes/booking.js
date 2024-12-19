@@ -171,7 +171,7 @@ response format:
         msg: ""
     }
 */
-ROUTER.put("/:booking_id", verify_jwt, async (req, res) => {
+ROUTER.put("/:booking_id", async (req, res) => {
     try {
         const booking_id = req.params.booking_id;
         const user_id = req.user.user_id;

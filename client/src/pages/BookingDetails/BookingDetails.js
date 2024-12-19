@@ -10,6 +10,9 @@ function BookingDetails() {
   const [booking, setBooking] = useState({});
   const [invited, setInvited] = useState([]);
   const [owner, setOwner] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [registrationStatus, setRegistrationStatus] = useState(null);
 
   const { booking_id } = useParams();
 
@@ -49,6 +52,38 @@ function BookingDetails() {
       });
   }
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setEmailError(""); 
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+
+    const updatedBooking = {
+      ...booking,
+      invited: [...(booking.invited || []), email], 
+    };
+
+    const url = format_url({ endpoint: `/api/booking/${booking_id}` });
+    const resp = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedBooking),
+    });
+    console.log(resp)
+
+    if (resp.ok) {
+      const data = await resp.json();
+      setRegistrationStatus("You have successfully registered!");
+    } else {
+      setRegistrationStatus("Registration failed. Please try again.");
+    }
+  };
+
   // fetch bookings and invited users on mount
   useEffect(() => {
     const fetchMountData = async () => {
@@ -59,10 +94,12 @@ function BookingDetails() {
         const ownerData = await fetchUser(bookingData.user_id);
         setOwner(ownerData);
 
-        /*const invitedData = await Promise.all(
+        const invitedData = await Promise.all(
           bookingData.invited.map((user_id) => fetchUser(user_id))
         );
-        setInvited(invitedData);*/
+        console.log(bookingData);
+        console.log(invitedData)
+        setInvited(invitedData);
       }
     };
     fetchMountData();
@@ -86,7 +123,7 @@ function BookingDetails() {
 
       <div className="booking-container">
         <div className="booking-info">
-          <h1>details</h1>
+          <h1>Details</h1>
           <p>
             {booking.title} with {owner}
           </p>
@@ -97,6 +134,21 @@ function BookingDetails() {
             {booking.type === "recurring" ? (<ItemRecurring booking={booking} />) : (<></>)}
 
           </div>
+          <div className="booking-info">
+          <h1>Register for this Booking</h1>
+          <form onSubmit={handleRegister}>
+            <input
+              type="email"
+              value={email}
+              onChange={handleEmailChange}
+              placeholder="Enter your email"
+              required
+            />
+            <button type="submit">Register</button>
+            {emailError && <p className="error">{emailError}</p>}
+            {registrationStatus && <p>{registrationStatus}</p>}
+          </form>
+        </div>
         </div>
         <div className="booking-info">
           <h1>invited</h1>

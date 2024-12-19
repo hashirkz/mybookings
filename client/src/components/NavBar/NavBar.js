@@ -34,7 +34,9 @@ function NavBar() {
         <a href="/history" className="navbar-link">History</a>
         <button className="logout-button" onClick={handleLogout}>Log Out</button>
       </div>
+      
       <Dropdown/>
+      {/* <div classname="main"></div> */}
     </div>
   );
 }

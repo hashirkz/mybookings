@@ -8,31 +8,6 @@
     padding-left: 1.5em;
 }
 
-
-.attachment {
-    width: 70%;
-    height: 1em;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-
-    margin-bottom: 1em;
-    padding: 0.7em 1.4em;
-    font-size: 0.8em;
-    background-color: var(--accent2);
-    border-radius: 15px;
-
-    transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    margin-left: 0;
-}
-
-.attachment:hover {
-    background-color: var(--accent1);
-    transform: scale(1.05);
-}
-
 .logo {
     display: flex;
     align-items: center;

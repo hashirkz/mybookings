@@ -31,10 +31,9 @@ function BookingOnetime() {
           dates: date, 
           startTimes: startTime,
           endTimes: endTime,
-          message: message,  
+          message: message,
+          invited: [],  
       };
-      console.log(booking);
-
       const url = format_url({ endpoint: "/api/booking" });
       const resp = await fetch(url, {
         method: "POST",
