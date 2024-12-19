@@ -179,32 +179,33 @@ ROUTER.put("/", verify_jwt, async (req, res) => {
 });
 
 
-ROUTER.get("/me", verify_jwt, async (req, res) => {
-    try {
-        const user_id = req.user.user_id;
-        const conn = await mongo_conn();
-        const collection = conn.collection("users");
+// ROUTER.get("/me", verify_jwt, async (req, res) => {
+//     try {
+//         const user_id = req.user.user_id;
+//         const conn = await mongo_conn();
+//         const collection = conn.collection("users");
 
-        const data = await collection.findOne({ user_id: user_id });
+//         const data = await collection.findOne({ user_id: user_id });
+//         console.log(`this is the ${user_id}`);
 
-        if (!data) {
-            return res.status(404).json({
-                status: "error",
-                msg: `user ${user_id} does not exist`,
-            });
-        }
+//         if (!data) {
+//             return res.status(404).json({
+//                 status: "error",
+//                 msg: `user ${user_id} does not exist`,
+//             });
+//         }
 
-        res.status(200).json({
-            status: "success",
-            msg: "found user",
-            data: { user: data.user },
-        });
-    } catch (err) {
-        res.status(500).json({
-            status: "error",
-            msg: "server error unable to retrieve user",
-        });
-    }
-});
+//         res.status(200).json({
+//             status: "success",
+//             msg: "found user",
+//             data: { user: data.user },
+//         });
+//     } catch (err) {
+//         res.status(500).json({
+//             status: "error",
+//             msg: "server error unable to retrieve user",
+//         });
+//     }
+// });
 
 export default ROUTER;

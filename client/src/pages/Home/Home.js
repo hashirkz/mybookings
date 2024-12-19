@@ -1,31 +1,18 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import { format_url } from "../../conf.js";
+import { jwtDecode } from "jwt-decode";
 import "./Home.css";
 import { data } from "react-router-dom";
 
 function Home() {
   const [username, setUsername] = useState("");
-  useEffect(() => {
-    const fetchUsername = async () => {
-      const token = localStorage.getItem("token");
-      const url = format_url({ endpoint: "/api/users/me" });
-      const resp = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      
-      if (resp.ok) {
-        const data = await resp.json();
-        setUsername(data.data.user);
-      } else {
-        console.error("Failed to fetch username");
-      }
-    };
 
-    fetchUsername();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const decoded = jwtDecode(token);
+    setUsername(decoded.user);
+
   }, [])
 
   return (
