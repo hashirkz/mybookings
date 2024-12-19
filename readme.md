@@ -8,6 +8,7 @@ cd ../client
 npm run start
 
 # WEBSITE NOW RUNNING AT http://localhost:3000/
+# please use firefox
 
 # if u want to check what the mongodb database looks like 
 mongosh mongodb://localhost:27017
