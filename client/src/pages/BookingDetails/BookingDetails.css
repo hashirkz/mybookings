@@ -21,3 +21,16 @@
     display: flex;
     justify-content: center;
 }
+
+.details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.booking-info{
+    margin-left: 30%;
+}
+
+  
+

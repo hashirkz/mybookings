@@ -7,8 +7,9 @@ import "./History.css";
 function History() {
   const [createdBookings, setCreatedBookings] = useState([]);
   const [invitedBookings, setInvitedBookings] = useState([]);
+  const [requests, setRequests] = useState([]);
 
-  const handleDelete = async (booking_id, setBookings) => {
+  const handleDeleteBooking = async (booking_id, setBookings) => {
     try {
       const token = localStorage.getItem("token");
       const url = format_url({ endpoint: `/api/booking/${booking_id}` });
@@ -26,6 +27,27 @@ function History() {
       alert("unable to delete this booking");
     }
   };
+
+  
+  const handleDeleteRequest = async (requestId, setRequests) => {
+    try {
+      const token = localStorage.getItem("token");
+      const url = format_url({ endpoint: `/api/request/${requestId}` });
+      const resp = await fetch(url, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (resp.ok) {
+        setRequests((current) => {
+          return current.filter((booking) => booking.requestId !== requestId);
+        });
+      }
+    } catch (err) {
+      alert("unable to delete this request");
+    }
+  };
+
 
   const fetchBookings = async (token, type) => {
     const url = format_url({ endpoint: "/api/history", q: { type: type } });
@@ -45,26 +67,29 @@ function History() {
     }
   };
 
+  const fetchRequests = async (token, type) => {
+    const url = format_url({ endpoint: "/api/request", q: {type: type}});
+    const resp = await fetch(url, {
+        method: "GET",
+        headers: {Authorization: `Bearer ${token}`}
+      });
+    if (resp.ok) {
+      const data = await resp.json();
+      if (type == "recipient") {
+        setRequests(data.data);
+      }
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       fetchBookings(token, "created");
       fetchBookings(token, "invited");
+      fetchRequests(token, "recipient");
     }
   }, []);
 
-  // sorting the bookings
-  // const sortedCreatedBookings = [...createdBookings].sort(
-  //   (booking1, booking2) => {
-  //     return new Date(booking2.start) - new Date(booking1.start);
-  //   }
-  // );
-
-  // const sortedInvitedBookings = [...invitedBookings].sort(
-  //   (booking1, booking2) => {
-  //     return new Date(booking2.start) - new Date(booking1.start);
-  //   }
-  // );
   return (
     <>
       <NavBar />
@@ -74,13 +99,16 @@ function History() {
           name="Your Bookings"
           deletable={true}
           handleDelete={(booking_id) =>
-            handleDelete(booking_id, setCreatedBookings)
+            handleDeleteBooking(booking_id, setCreatedBookings)
           }
         />
         <BookingGallery
-          bookings={invitedBookings}
-          name="Your Invites"
-          deletable={false}
+          bookings={requests}
+          name="Your Requests"
+          deletable={true}
+          handleDelete={(requestId) => 
+            handleDeleteRequest(requestId, setRequests)
+          }
         />
       </div>
     </>

@@ -128,14 +128,14 @@ function BookingDetails() {
             {booking.title} with {owner}
           </p>
 
-          <div>
+          <div className="details">
             {booking.type === "poll" ? (<ItemPoll booking={booking} />) : (<></>)}
             {booking.type === "onetime" ? (<ItemOnetime booking={booking} />) : (<></>)}
             {booking.type === "recurring" ? (<ItemRecurring booking={booking} />) : (<></>)}
 
           </div>
           <div className="booking-info">
-          <h1>Register for this Booking</h1>
+          <p>Register for this Booking</p>
           <form onSubmit={handleRegister}>
             <input
               type="email"

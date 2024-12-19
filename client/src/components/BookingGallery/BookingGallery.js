@@ -1,5 +1,6 @@
 import { React } from "react";
 import BookingItem from "./BookingItem.js";
+import RequestItem from "./RequestItem.js";
 import "./BookingGallery.css";
 
 function BookingGallery({ bookings, name, deletable, handleDelete }) {
@@ -9,13 +10,23 @@ function BookingGallery({ bookings, name, deletable, handleDelete }) {
       {bookings.length === 0 ? (
         <p>no bookings</p>
       ) : (
-        bookings.map((booking) => (
-          <BookingItem
+        bookings.map((booking) => (       
+          booking.type == "request" ? (
+            <RequestItem
+            key={booking.requestId}
             booking={booking}
             deletable={deletable}
             handleDelete={handleDelete}
-          />
-        ))
+            />
+          ): (
+            <BookingItem
+            key={booking.booking_id}
+              booking={booking}
+              deletable={deletable}
+              handleDelete={handleDelete}
+            />
+          )
+        ))      
       )}
     </div>
   );
