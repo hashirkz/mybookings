@@ -193,9 +193,14 @@ ROUTER.put("/:booking_id", async (req, res) => {
             });
         }
 
+        const invited_list = await collection.find({ booking_id: booking_id }).invited;
+
         res.status(200).json({
             status: "success",
             msg: `updated booking ${booking_id}`,
+            data: {
+                invited: invited_list,
+            },
         });
     } catch (err) {
         res.status(500).json({

@@ -41,7 +41,7 @@ function Login() {
   const handleSignup = async (e) => {
     e.preventDefault();
     if (!valid_mcgill_email(user.user)) {
-      alert("you must singup with a @mcgill.ca or @mail.mcgill.ca email address");
+      alert("you must sign up with a @mcgill.ca or @mail.mcgill.ca email address");
       return;
     }
     handleAuth("/api/auth/signup");
@@ -72,7 +72,7 @@ function Login() {
           </button>
         </form>
         <div className="signup-container">
-          <p>dont have an account?</p>
+          <p>Don't have an account?</p>
           <button className="input-button" onClick={handleSignup}>
             Sign Up
           </button>

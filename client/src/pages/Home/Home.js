@@ -7,14 +7,33 @@ import { data } from "react-router-dom";
 
 function Home() {
   const [username, setUsername] = useState("");
+  const [totalBookings, setTotalBookings] = useState(0); // since its number
+  let total = totalBookings;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const decoded = jwtDecode(token);
     setUsername(decoded.user);
+    // ok lemme just see if it works
 
+    fetchBookings(token, "created");
   }, [])
-
+  
+  const fetchBookings = async (token, type) => {
+    const url = format_url({ endpoint: "/api/history", q: { type: type } });
+    const resp = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (resp.ok) {
+      const data = await resp.json();
+      setTotalBookings(data.data.length);
+    } else {
+      alert("unable to fetch bookings");
+    }
+  };
   return (
     <div className="home">
       <NavBar />
@@ -27,21 +46,12 @@ function Home() {
 
       <div className="stats">
         <div className="card">
-          <h3><center>Active Bookings</center></h3>
-          <p><center>5</center></p>
-        </div>
-        <div className="card">
-          <h3><center>Pending Requests</center></h3>
-          <p><center>2</center></p>
-        </div>
-        <div className="card">
           <h3><center>Total Bookings</center></h3>
-          <p><center>23</center></p>
+          <p><center>{totalBookings}</center></p>
         </div>
       </div>
 
     </div>
   );
-}
-
+};
 export default Home;

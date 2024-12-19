@@ -74,10 +74,13 @@ function BookingDetails() {
       },
       body: JSON.stringify(updatedBooking),
     });
-    console.log(resp)
 
     if (resp.ok) {
       const data = await resp.json();
+      // console.log(`DATA: ${data.title}`);
+      setEmail("");
+      setInvited(( data.invited));
+
       setRegistrationStatus("You have successfully registered!");
     } else {
       setRegistrationStatus("Registration failed. Please try again.");
@@ -94,12 +97,7 @@ function BookingDetails() {
         const ownerData = await fetchUser(bookingData.user_id);
         setOwner(ownerData);
 
-        const invitedData = await Promise.all(
-          bookingData.invited.map((user_id) => fetchUser(user_id))
-        );
-        console.log(bookingData);
-        console.log(invitedData)
-        setInvited(invitedData);
+        setInvited(bookingData.invited);
       }
     };
     fetchMountData();
@@ -150,14 +148,14 @@ function BookingDetails() {
           </form>
         </div>
         </div>
-        <div className="booking-info">
-          <h1>invited</h1>
+     {/*} <div className="booking-info">
+          <h1>invited {}</h1>
           {invited.length > 0
             ? invited.map((user) => {
                 return <p>{user}</p>;
               })
             : "no invitees"}
-        </div>
+        </div>*/}
       </div>
     </>
   );
