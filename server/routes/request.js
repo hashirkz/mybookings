@@ -33,7 +33,7 @@ ROUTER.post("/", verify_jwt, async (req, res) => {
 
         await collection.insertOne({
             ...req.body,
-            request_id: request_id,
+            requestId: request_id,
             user_id: user_id,
         });
 
@@ -74,7 +74,7 @@ ROUTER.get("/:request_id", async (req, res) => {
         const collection = conn.collection("requests");
 
         let data = await collection.findOne({
-            request_id: request_id,
+            requestId: request_id,
         });
 
         res.status(200).json({
@@ -103,7 +103,7 @@ ROUTER.get("/", verify_jwt, async (req, res) => {
         const collection = conn.collection("requests");
 
         const data = await collection.find({
-            recipient_id: user_id,
+            recipientId: user_id,
         }).toArray();
 
         res.status(200).send({
@@ -133,8 +133,8 @@ ROUTER.delete("/:request_id", verify_jwt, async (req, res) => {
         const collection = conn.collection("requests");
 
         const status = await collection.deleteOne({
-            request_id: request_id,
-            recipient_id: user_id
+            requestId: request_id,
+            recipientId: user_id
         })
 
         if (status.deletedCount == 0) {
