@@ -56,7 +56,6 @@ function BookingPoll() {
             invited: [], 
             votes: [], 
         };
-        console.log(booking);
 
         const url = format_url({ endpoint: "/api/booking" });
         const resp = await fetch(url, {

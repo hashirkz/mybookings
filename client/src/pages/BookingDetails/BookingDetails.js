@@ -59,6 +59,7 @@ function BookingDetails() {
 
   const handleVoteChange = (vote) => {
     setSelectedVote(vote);
+    console.log(vote)
 };
 
   const handleRegister = async (e) => {
@@ -139,8 +140,8 @@ function BookingDetails() {
 
           <div className="details">
             {booking.type === "poll" ? (<ItemPoll booking={booking} handleVoteChange={handleVoteChange}/>) : (<></>)}
-            {booking.type === "onetime" ? (<ItemOnetime booking={booking} />) : (<></>)}
-            {booking.type === "recurring" ? (<ItemRecurring booking={booking} />) : (<></>)}
+            {booking.type === "onetime" ? (<ItemOnetime booking={booking} handleVoteChange={handleVoteChange}/>) : (<></>)}
+            {booking.type === "recurring" ? (<ItemRecurring booking={booking} handleVoteChange={handleVoteChange}/>) : (<></>)}
 
           </div>
           <div className="booking-info">

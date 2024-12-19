@@ -12,6 +12,9 @@ function BookingRecurring() {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [message, setMessage] = useState("");
+    const [options, setOptions] = useState([
+            { startTime: "", endTime: "" },
+        ]);
     const navigate = useNavigate();
   
     const handleDayChange = (e) => {
@@ -20,6 +23,15 @@ function BookingRecurring() {
         checked ? [...prevDays, value] : prevDays.filter((day) => day !== value)
       );
     };
+
+    const addOption = () => {
+      setOptions([...options, {  startTime: "", endTime: "" }]);
+    };
+    const deleteOption = (index) => {
+      const newOptions = options.filter((_, i) => i !== index);
+      setOptions(newOptions);
+      
+  };
 
     const validateInput = () => {
       if (startTime >= endTime) {
@@ -32,20 +44,29 @@ function BookingRecurring() {
     }
       return true;
    };
-  
+
+   const handleOptionChange = (index, field, value) => {
+      const newOptions = [...options];
+      setStartTime (newOptions[index][0]);
+      setEndTime (newOptions[index][1]);
+
+      newOptions[index][field] = value;
+      setOptions(newOptions);
+    };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateInput()) return;
 
     const token = localStorage.getItem("token"); 
-    console.log(days);
-
+    const startTimes = options.map(option => option.startTime);
+    const endTimes = options.map(option => option.endTime);
     let booking = {
         type: "recurring",
         title: title,
         days: days, 
-        startTimes: startTime,
-        endTimes: endTime,
+        startTimes: startTimes,
+        endTimes: endTimes,
         startDate: startDate,
         endDate: endDate,
         message: message,  
@@ -130,28 +151,46 @@ function BookingRecurring() {
             )}
           </div>
         </div>
-        
-        <div className="forms">
-          <label>Start Time:</label>
-          <input
-            type="time"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            required
-          />
-        </div>
+        {options.map((option, index) => (
+            <div
+            key={index}
+            >        
+            <div className="forms">
+                <label>Start Time:</label>
+                <input
+                    type="time"
+                    value={option.startTime}
+                    onChange={(e) => handleOptionChange(index, "startTime", e.target.value)}
+                    required
+                />
+            </div>
 
-        <div className="forms">
-          <label>End Time:</label>
-          <input
-            type="time"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            required
-          />
-        </div> 
+            <div className="delete-input">
+                <div className="forms">
+                    <label>End Time:</label>
+                    <input
+                        type="time"
+                        value={option.endTime}
+                        onChange={(e) => handleOptionChange(index, "endTime", e.target.value)}
+                        required
+                    />                
+                <button
+                    className="delete"
+                    type="button"
+                    onClick={() => deleteOption(index)}
+                >
+                    Delete Option
+                </button>
+                </div>
+            </div>
+            </div>
+        ))}
+
         <AttachmentForm message={message} setMsg={setMessage}/>
         <div className="button-submit">
+        <button type="button" onClick={addOption}>
+                + Add Option
+            </button>
           <button type="submit">Create Recurring Meeting URL</button>
         </div>
         

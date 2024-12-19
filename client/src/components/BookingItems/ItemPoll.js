@@ -14,7 +14,7 @@ const ItemPoll = ({booking, handleVoteChange }) => {
         <div>
             <p>Message: {booking.message}</p>
 
-            <p>Please choose one:</p>
+            <p>Vote in the Poll:</p>
 
             {booking.dates.map((date, index) => {
                 const startTime = booking.startTimes[index];
