@@ -13,12 +13,13 @@ endpoint: /api/request
 method: POST
 purpose: for creating a new request
 
-response format:
+request format:
     { 
         status: "", 
         msg: "",
         data: {
-            ... empty or the found booking ...
+            recipient_id: some user_id
+            ... other details ... 
         }
     }
 */
@@ -118,6 +119,12 @@ ROUTER.get("/", verify_jwt, async (req, res) => {
     }
 })
 
+/*
+PROTECTED
+endpoint: /api/request/:request_id
+method: DELETE
+purpose: to allow a recipient to delete a request that was sent to them 
+*/
 ROUTER.delete("/:request_id", verify_jwt, async (req, res) => {
     try {
         const request_id = req.params.request_id;
