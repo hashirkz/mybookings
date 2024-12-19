@@ -6,7 +6,7 @@ function RequestItem({ booking, deletable, handleDelete }) {
       <div
         className="booking-item"
       >
-        <p>{booking.title} on {booking.dates} from {booking.startTimes} to from {booking.startTimes}</p>
+        <p>{booking.title} on {booking.dates} from {booking.startTimes} to {booking.startTimes}</p>
 
         {deletable && (
           <button
