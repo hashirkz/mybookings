@@ -22,11 +22,13 @@ Hashir server:
 Hashir client: 
     wrote /login page Login.js Login.css and most of the /history page and its components/css underneath so BookingGallery.js BookingItem.js and BookingGallery.css
 
+
 Ashley server:
      wrote API call uses the database in /client and helped with some of the /booking and /requests endpoints
 
 Ashley client: 
     wrote all of /booking + its components (BookingCalendar, BookingForms, AttachmentForm), all of /request + its components (RequestForm), most of /booking-details + its components (BookingItems), most of Navbar + Landing, helped with /history and  + its components (BookingGallery). 
+
 
 Fatin server:
      wrote endpoints (not all) that uses the database in /history and in /users. wrote tests in /tests to ensure endpoints functionality
@@ -37,4 +39,4 @@ Fatin client:
 
 ** the pdf says we need to include names for each file
 we instead used contributions.csv to do this not sure 
-if you need this file but its there **  
+if you need this file but its there **
