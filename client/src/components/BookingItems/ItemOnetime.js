@@ -1,6 +1,5 @@
 import { React} from "react";
 const ItemOnetime = (booking ) => {
-    console.log(booking)
     return (
         <div>
             <p>On {booking.booking.dates}</p>

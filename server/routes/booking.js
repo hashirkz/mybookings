@@ -176,6 +176,8 @@ ROUTER.put("/:booking_id", async (req, res) => {
     try {
         const booking_id = req.params.booking_id;
         const invited = req.body.invited;
+        const vote = req.body.votes;
+
         let conn = await mongo_conn();
         const collection = conn.collection("bookings");
 
@@ -183,7 +185,10 @@ ROUTER.put("/:booking_id", async (req, res) => {
             {
                 booking_id: booking_id,
             },
-            { $push: { invited: { $each: invited } } }
+            { $push: {
+                invited: { $each: invited },
+                votes: { $each: vote },
+            } }
         );
 
         if (status.modifiedCount == 0) {

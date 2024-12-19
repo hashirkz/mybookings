@@ -53,7 +53,8 @@ function BookingPoll() {
             startTimes: startTimes,
             endTimes: endTimes,
             message: message,  
-            invited: [],  
+            invited: [], 
+            votes: [], 
         };
         console.log(booking);
 

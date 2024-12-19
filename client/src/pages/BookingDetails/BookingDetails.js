@@ -13,8 +13,8 @@ function BookingDetails() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [registrationStatus, setRegistrationStatus] = useState(null);
-
-  const { booking_id } = useParams();
+  const [selectedVote, setSelectedVote] = useState("");
+  const {booking_id } = useParams();
 
   const fetchBooking = async (booking_id) => {
     const url = format_url({ endpoint: `/api/booking/${booking_id}` });
@@ -57,13 +57,22 @@ function BookingDetails() {
     setEmailError(""); 
   };
 
+  const handleVoteChange = (vote) => {
+    setSelectedVote(vote);
+};
+
   const handleRegister = async (e) => {
     e.preventDefault();
 
+    if (!selectedVote) {
+      alert("Please select an option before registering.");
+      return;
+    }
 
     const updatedBooking = {
       ...booking,
       invited: [...new Set([...(booking.invited || []), email])],
+      votes: [...new Set([...(booking.votes || []), { email, vote: selectedVote }])],
     };
 
     const url = format_url({ endpoint: `/api/booking/${booking_id}` });
@@ -79,9 +88,11 @@ function BookingDetails() {
       const data = await resp.json();
       // console.log(`DATA: ${data.title}`);
       setEmail("");
-      setInvited(( data.invited));
-
+      setInvited((data.invited));
+      setBooking((updatedBooking));
       setRegistrationStatus("You have successfully registered!");
+      console.log({booking});
+
     } else {
       setRegistrationStatus("Registration failed. Please try again.");
     }
@@ -127,7 +138,7 @@ function BookingDetails() {
           </p>
 
           <div className="details">
-            {booking.type === "poll" ? (<ItemPoll booking={booking} />) : (<></>)}
+            {booking.type === "poll" ? (<ItemPoll booking={booking} handleVoteChange={handleVoteChange}/>) : (<></>)}
             {booking.type === "onetime" ? (<ItemOnetime booking={booking} />) : (<></>)}
             {booking.type === "recurring" ? (<ItemRecurring booking={booking} />) : (<></>)}
 

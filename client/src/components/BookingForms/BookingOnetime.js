@@ -33,6 +33,7 @@ function BookingOnetime() {
           endTimes: endTime,
           message: message,
           invited: [],  
+          votes: [],
       };
       const url = format_url({ endpoint: "/api/booking" });
       const resp = await fetch(url, {

@@ -1,6 +1,5 @@
 import { React} from "react";
 const ItemRecurring = (booking) => {
-    console.log(booking)
     const days = booking.booking.days.join(', ');
 
     return (

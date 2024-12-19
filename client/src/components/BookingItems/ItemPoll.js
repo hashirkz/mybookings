@@ -1,21 +1,24 @@
 import { React, useState } from "react";
-const ItemPoll = (booking) => {
-    console.log(booking)
+const ItemPoll = ({booking, handleVoteChange }) => {
     const [selectedOption, setSelectedOption] = useState("");
 
 
-    const handleOptionChange = (event) => {
-        setSelectedOption(event.target.value);
+    const handleOptionChange = (e) => {
+        setSelectedOption(e.target.value);
+        if (handleVoteChange) {
+            handleVoteChange(e.target.value); 
+        }
     };
+
     return (
         <div>
-            <p>Message: {booking.booking.message}</p>
+            <p>Message: {booking.message}</p>
 
             <p>Please choose one:</p>
 
-            {booking.booking.dates.map((date, index) => {
-                const startTime = booking.booking.startTimes[index];
-                const endTime = booking.booking.endTimes[index];
+            {booking.dates.map((date, index) => {
+                const startTime = booking.startTimes[index];
+                const endTime = booking.endTimes[index];
                 const option = `${date} from ${startTime} to ${endTime}`;
 
                 return (

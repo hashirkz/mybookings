@@ -50,6 +50,7 @@ function BookingRecurring() {
         endDate: endDate,
         message: message,  
         invited: [],  
+        votes: [],
     };
     console.log(booking);
 
