@@ -6,8 +6,8 @@ import "./History.css";
 
 function History() {
   const [createdBookings, setCreatedBookings] = useState([]);
-  const [invitedBookings, setInvitedBookings] = useState([]);
   const [requests, setRequests] = useState([]);
+  const [totalBookings, setTotalBookings] = useState(0);
 
   const handleDeleteBooking = async (booking_id, setBookings) => {
     try {
@@ -59,9 +59,8 @@ function History() {
     });
     if (resp.ok) {
       const data = await resp.json();
-      type === "created"
-        ? setCreatedBookings(data.data)
-        : setInvitedBookings(data.data);
+      setCreatedBookings(data.data);
+      setTotalBookings(data.data.length);
     } else {
       alert("unable to fetch bookings");
     }
@@ -75,7 +74,7 @@ function History() {
       });
     if (resp.ok) {
       const data = await resp.json();
-      if (type == "recipient") {
+      if (type === "recipient") {
         setRequests(data.data);
       }
     }
@@ -85,10 +84,12 @@ function History() {
     const token = localStorage.getItem("token");
     if (token) {
       fetchBookings(token, "created");
-      fetchBookings(token, "invited");
+      // fetchBookings(token, "invited");
       fetchRequests(token, "recipient");
+
     }
   }, []);
+
 
   return (
     <>

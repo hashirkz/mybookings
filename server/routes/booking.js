@@ -143,6 +143,7 @@ ROUTER.delete("/:booking_id", verify_jwt, async (req, res) => {
     }
 });
 
+
 /*
 PROTECTED
 endpoint: /api/booking/:booking_id
@@ -174,16 +175,15 @@ response format:
 ROUTER.put("/:booking_id", async (req, res) => {
     try {
         const booking_id = req.params.booking_id;
-        const user_id = req.user.user_id;
+        const invited = req.body.invited;
         let conn = await mongo_conn();
         const collection = conn.collection("bookings");
 
         const status = await collection.updateOne(
             {
                 booking_id: booking_id,
-                user_id: user_id,
             },
-            { $set: req.body }
+            { $push: { invited: { $each: invited } } }
         );
 
         if (status.modifiedCount == 0) {

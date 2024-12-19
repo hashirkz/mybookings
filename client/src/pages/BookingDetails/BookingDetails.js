@@ -63,7 +63,7 @@ function BookingDetails() {
 
     const updatedBooking = {
       ...booking,
-      invited: [...(booking.invited || []), email], 
+      invited: [...new Set([...(booking.invited || []), email])],
     };
 
     const url = format_url({ endpoint: `/api/booking/${booking_id}` });
