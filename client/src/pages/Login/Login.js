@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { format_url } from "../../conf.js";
+import { format_url, valid_mcgill_email } from "../../conf.js";
 import "./Login.css";
 
 function Login() {
@@ -40,6 +40,10 @@ function Login() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    if (!valid_mcgill_email(user.user)) {
+      alert("you must singup with a @mcgill.ca or @mail.mcgill.ca email address");
+      return;
+    }
     handleAuth("/api/auth/signup");
     // navigate("/signup-form");
   };
