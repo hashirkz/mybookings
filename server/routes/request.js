@@ -26,18 +26,15 @@ request format:
 ROUTER.post("/", verify_jwt, async (req, res) => {
     try {
         const request_id = uuidv4();
-        const user_id = req.user.user_id;
-
         let conn = await mongo_conn();
         const collection = conn.collection("requests");
-
-        await collection.insertOne({
+        const data = {
             ...req.body,
             requestId: request_id,
-            user_id: user_id,
-        });
-
+            user_id: req.user.user_id,
+        }
         delete data.user;
+        await collection.insertOne(data);
 
         res.status(201).json({
             status: "success",
